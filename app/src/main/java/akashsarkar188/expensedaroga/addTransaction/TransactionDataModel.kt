@@ -1,8 +1,9 @@
 package akashsarkar188.expensedaroga.addTransaction
 
-import akashsarkar188.expensedaroga.utils.Constants
+import akashsarkar188.expensedaroga.utils.TABLE_TRANSACTION
+import akashsarkar188.expensedaroga.utils.TABLE_TRANSACTION_META
+import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 enum class TransactionType {
@@ -12,16 +13,17 @@ enum class TransactionType {
     LOAN_GIVEN
 }
 
-@Entity(tableName = Constants.TABLE_TRANSACTION)
+@Entity(tableName = TABLE_TRANSACTION)
 data class TransactionDataModel(
     @PrimaryKey(autoGenerate = true) var id: Int,
-    var amount: Double,
-    var date: String,
+    @ColumnInfo(name = "amount") var amount: Double,
+    @ColumnInfo(name = "date") var date: String,
 ) {
 
-    @Entity(tableName = Constants.TABLE_TRANSACTION_META)
+    /*@Entity(tableName = TABLE_TRANSACTION_META)
     data class TransactionMeta(
-        var category: String,
-        var transactionType: TransactionType
-    )
+        @PrimaryKey(autoGenerate = true) var id: Int,
+        @ColumnInfo(name = "category") var category: String,
+        @ColumnInfo(name = "transactionType") var transactionType: TransactionType
+    )*/
 }

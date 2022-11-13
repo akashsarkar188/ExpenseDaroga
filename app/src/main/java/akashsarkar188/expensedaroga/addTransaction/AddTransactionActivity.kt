@@ -2,6 +2,7 @@ package akashsarkar188.expensedaroga.addTransaction
 
 import akashsarkar188.expensedaroga.R
 import akashsarkar188.expensedaroga.databinding.ActivityAddTransactionBinding
+import akashsarkar188.expensedaroga.utils.ObjectFactory
 import akashsarkar188.expensedaroga.utils.getCurrentMonthYearString
 import android.os.Bundle
 import android.util.Log
@@ -32,7 +33,9 @@ class AddTransactionActivity : AppCompatActivity() {
             // lets show all the transactions for the selected month
             transactionsRecyclerView.layoutManager =
                 LinearLayoutManager(this@AddTransactionActivity)
-
         }
+
+        ObjectFactory.appDatabaseInstance!!.transactionDao().addTransaction(TransactionDataModel(1, 10.0, "Today"))
+        Log.e("XXX", "init: " + ObjectFactory.appDatabaseInstance!!.transactionDao().getAllTransactions())
     }
 }

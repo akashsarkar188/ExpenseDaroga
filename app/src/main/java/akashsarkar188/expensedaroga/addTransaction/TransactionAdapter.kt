@@ -2,8 +2,10 @@ package akashsarkar188.expensedaroga.addTransaction
 
 import akashsarkar188.expensedaroga.R
 import akashsarkar188.expensedaroga.databinding.RowTransactionBinding
-import akashsarkar188.expensedaroga.utils.Constants
+import akashsarkar188.expensedaroga.utils.RECYCLER_DATA_VIEW
+import akashsarkar188.expensedaroga.utils.RECYCLER_NO_DATA_VIEW
 import android.content.Context
+import android.provider.SyncStateContract
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -21,14 +23,14 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return if (list.isEmpty()) {
-            Constants.RECYCLER_NO_DATA_VIEW
+            RECYCLER_NO_DATA_VIEW
         } else {
-            Constants.RECYCLER_DATA_VIEW
+            RECYCLER_DATA_VIEW
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == Constants.RECYCLER_NO_DATA_VIEW) {
+        return if (viewType == RECYCLER_NO_DATA_VIEW) {
             TransactionViewHolder(
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
@@ -50,7 +52,7 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (getItemViewType(position) == Constants.RECYCLER_DATA_VIEW) {
+        if (getItemViewType(position) == RECYCLER_DATA_VIEW) {
             if (holder is TransactionViewHolder) {
                 holder.bindView(list[position], position)
             }
