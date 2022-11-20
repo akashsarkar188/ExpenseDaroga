@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:strokeColor="@color/red_400"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:id="@+id/cardLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:paddingVertical="4dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="Debit"
+                android:textColor="@color/red_400"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

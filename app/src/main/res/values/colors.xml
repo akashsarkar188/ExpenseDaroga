@@ -10,4 +10,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey_400">#BDBDBD</color>
     <color name="red_400">#EF5350</color>
+    <color name="green_400">#66BB6A</color>
+    <color name="blue_400">#42A5F5</color>
+    <color name="purple_400">#7E57C2</color>
+
+    <color name="red_300">#E57373</color>
+    <color name="green_300">#81C784</color>
+    <color name="blue_300">#64B5F6</color>
+    <color name="purple_300">#9575CD</color>
 </resources>

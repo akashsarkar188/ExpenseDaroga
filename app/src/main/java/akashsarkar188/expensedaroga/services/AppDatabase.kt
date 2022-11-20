@@ -1,14 +1,14 @@
 package akashsarkar188.expensedaroga.services
 
-import akashsarkar188.expensedaroga.addTransaction.TransactionDao
-import akashsarkar188.expensedaroga.addTransaction.TransactionDataModel
+import akashsarkar188.expensedaroga.addTransaction.repository.TransactionDao
+import akashsarkar188.expensedaroga.addTransaction.model.TransactionDataModel
 import akashsarkar188.expensedaroga.utils.DATABASE_NAME
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [TransactionDataModel::class], version = 5, exportSchema = false)
+@Database(entities = [TransactionDataModel::class], version = 9, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {

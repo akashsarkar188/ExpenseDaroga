@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -44,7 +45,8 @@ class MainActivity : AppCompatActivity() {
             chatPartner = Person.Builder()
                 .setName("Daroga")
                 .setImportant(true)
-                .setBot(true)
+                .setBot(false)
+                .setIcon(IconCompat.createWithAdaptiveBitmapContentUri(Uri.parse("android.resource://akashsarkar188.expensedaroga/drawable/daroga")))
                 .build()
 
             shortcutId = "expense.daroga.shortcut"
@@ -60,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
             bubbleData = NotificationCompat.BubbleMetadata.Builder(
                 bubbleIntent,
-                IconCompat.createWithResource(this, R.drawable.rupee_icon)
+                IconCompat.createWithAdaptiveBitmapContentUri(Uri.parse("android.resource://akashsarkar188.expensedaroga/drawable/daroga"))
             )
                 .setDesiredHeight(800)
                 .setIntent(bubbleIntent)
@@ -99,7 +101,7 @@ class MainActivity : AppCompatActivity() {
                     this,
                     channelId
                 )
-                    .setSmallIcon(R.drawable.rupee_icon)
+                    .setSmallIcon(R.drawable.send_icon)
                     .setContentTitle("daroga ji")
                     .setContentText(":)")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
