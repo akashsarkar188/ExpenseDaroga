@@ -21,4 +21,7 @@ interface TransactionDao {
 
     @Query("delete from `$TABLE_TRANSACTION`")
     fun deleteAllTransactions()
+
+    @Query("delete from `$TABLE_TRANSACTION` where id = :transactionId")
+    fun deleteTransactionById(transactionId: Int)
 }

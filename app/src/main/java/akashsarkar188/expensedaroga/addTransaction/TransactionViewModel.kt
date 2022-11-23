@@ -56,6 +56,13 @@ class TransactionViewModel : ViewModel() {
         }
     }
 
+    fun deleteThisTransactions(transactionModel: TransactionDataModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            TransactionRepository.deleteThisTransactions(transactionModel.id)
+            fetchTransactionsForThisMonthYear()
+        }
+    }
+
     fun addTransaction(transaction: TransactionDataModel) {
         viewModelScope.launch(Dispatchers.IO) {
             TransactionRepository.addTransaction(transaction)

@@ -45,4 +45,11 @@ object TransactionRepository {
             transactionDao.deleteAllTransactions()
         }
     }
+
+    suspend fun deleteThisTransactions(transactionId: Int){
+        withContext(Dispatchers.IO) {
+            val transactionDao = appDatabase.transactionDao()
+            transactionDao.deleteTransactionById(transactionId)
+        }
+    }
 }

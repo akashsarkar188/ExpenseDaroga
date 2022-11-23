@@ -1,8 +1,8 @@
 package akashsarkar188.expensedaroga.utils.commonMethods
 
 import akashsarkar188.expensedaroga.R
-import android.content.Context
 import android.content.res.Resources
+import android.graphics.Rect
 import android.util.TypedValue
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -44,3 +44,20 @@ val Number.toPx get() = TypedValue.applyDimension(
     TypedValue.COMPLEX_UNIT_DIP,
     this.toFloat(),
     Resources.getSystem().displayMetrics)
+
+fun locateView(v: View?): Rect? {
+    val loc_int = IntArray(2)
+    if (v == null) return null
+    try {
+        v.getLocationOnScreen(loc_int)
+    } catch (npe: NullPointerException) {
+        //Happens when the view doesn't exist on screen anymore.
+        return null
+    }
+    val location = Rect()
+    location.left = loc_int[0]
+    location.top = loc_int[1]
+    location.right = location.left + v.width
+    location.bottom = location.top + v.height
+    return location
+}

@@ -9,7 +9,12 @@ import akashsarkar188.expensedaroga.utils.RECYCLER_DATA_VIEW
 import akashsarkar188.expensedaroga.utils.RECYCLER_NO_DATA_VIEW
 import akashsarkar188.expensedaroga.utils.commonMethods.getDateInDD_MMM
 import akashsarkar188.expensedaroga.utils.commonMethods.getTimeInHH_MM_A
+import akashsarkar188.expensedaroga.utils.commonMethods.locateView
+import akashsarkar188.expensedaroga.utils.popup.transaction.ActionType
+import akashsarkar188.expensedaroga.utils.popup.transaction.PopupListener
+import akashsarkar188.expensedaroga.utils.popup.transaction.TransactionPopup
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RelativeLayout
@@ -17,7 +22,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
-class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TransactionAdapter(val callback: (action: ActionType, dataObject: TransactionDataModel) -> Unit) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var list: ArrayList<TransactionDataModel> = ArrayList()
     private lateinit var context: Context
@@ -83,7 +89,7 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class TransactionViewHolder(private val binding: RowTransactionBinding) :
+    inner class TransactionViewHolder(private val binding: RowTransactionBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(row: TransactionDataModel, position: Int) {
@@ -111,6 +117,23 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
             }
             binding.parentCardView.layoutParams = params
+
+            binding.parentCardView.setOnLongClickListener {
+                val location = locateView(binding.parentCardView)
+                location?.let {
+                    TransactionPopup(context).showAt(
+                        gravity = Gravity.TOP,
+                        x = location.left,
+                        y = location.bottom,
+                        callback = object : PopupListener {
+                            override fun onActionButtonClicked(action: ActionType) {
+                                callback(action, row)
+                            }
+
+                        })
+                }
+                return@setOnLongClickListener true
+            }
         }
     }
 }
@@ -118,6 +141,4 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 class EmptyStateViewHolder(private val binding: CommonElementEmptyStateBinding) :
     RecyclerView.ViewHolder(
         binding.root
-    ) {
-
-}
+    )

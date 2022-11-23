@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -39,14 +40,18 @@ class MainActivity : AppCompatActivity() {
             var notificationManager: NotificationManager
 
             val targetIntent = Intent(this, AddTransactionActivity::class.java)
-            val bubbleIntent = PendingIntent.getActivity(this, 0, targetIntent, 0)
+            val bubbleIntent = PendingIntent.getActivity(this, 0, targetIntent, PendingIntent.FLAG_MUTABLE)
             val category = "com.example.category.IMG_SHARE_TARGET"
-
+            val icon = IconCompat.createWithAdaptiveBitmap(
+                resources.assets.open("darogaSquare.jpg").use { input ->
+                    BitmapFactory.decodeStream(input)
+                }
+            )
             chatPartner = Person.Builder()
                 .setName("Daroga")
                 .setImportant(true)
                 .setBot(false)
-                .setIcon(IconCompat.createWithAdaptiveBitmapContentUri(Uri.parse("android.resource://akashsarkar188.expensedaroga/drawable/daroga")))
+                .setIcon(icon)
                 .build()
 
             shortcutId = "expense.daroga.shortcut"
@@ -55,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                 .setCategories(setOf(category))
                 .setIntent(Intent(Intent.ACTION_DEFAULT))
                 .setLongLived(true)
+                .setIcon(icon)
                 .setShortLabel("Daroga")
                 .build()
 
@@ -62,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
             bubbleData = NotificationCompat.BubbleMetadata.Builder(
                 bubbleIntent,
-                IconCompat.createWithAdaptiveBitmapContentUri(Uri.parse("android.resource://akashsarkar188.expensedaroga/drawable/daroga"))
+                icon
             )
                 .setDesiredHeight(800)
                 .setIntent(bubbleIntent)

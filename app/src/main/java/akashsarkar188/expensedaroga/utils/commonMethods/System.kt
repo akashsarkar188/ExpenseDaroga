@@ -28,3 +28,15 @@ fun closeKeyboard(context: Context, view: View? = null) {
 
     }
 }
+
+inline fun doIfTrue(b: Boolean?, block: () -> Unit) {
+    if (b == true) block()
+}
+
+inline fun doIfFalse(b: Boolean?, block: () -> Unit) {
+    if (b == false) block()
+}
+
+inline fun doIfFalseOrNull(b: Boolean?, block: () -> Unit) {
+    if (b != true) block()
+}
