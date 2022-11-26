@@ -11,6 +11,7 @@ import akashsarkar188.expensedaroga.utils.commonMethods.*
 import akashsarkar188.expensedaroga.utils.popup.transaction.ActionType
 import android.animation.LayoutTransition
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -37,13 +38,14 @@ class AddTransactionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_transaction)
 
+        saveMonthInViewModel(intent)
         init()
         onClickListeners()
         initObservers()
         viewModel.fetchTransactionsForThisMonthYear()
     }
 
-    private fun init() {
+    private fun saveMonthInViewModel(intent: Intent) {
         // no month received? lets just focus on present!
         (intent.getStringExtra(BUNDLE_MONTH_YEAR_STRING)).let {
             if (it == null) {
@@ -60,6 +62,17 @@ class AddTransactionActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.let {
+            saveMonthInViewModel(it)
+            viewModel.fetchTransactionsForThisMonthYear()
+        }
+    }
+
+    private fun init() {
 
         binding?.apply {
             transactionsRecyclerView.layoutManager =
@@ -91,7 +104,7 @@ class AddTransactionActivity : AppCompatActivity() {
             transactionsRecyclerView.adapter = transactionAdapter
             transactionTypeRecyclerView.adapter = transactionTypeAdapter
 
-            monthYearTextView.text = viewModel.selectedMonthYear.value
+            monthYearTextView.text = getCurrentFullMonthYearStringFromMonthYear(viewModel.selectedMonthYear.value!!)
         }
 
         transactionTypeAdapter.addData(viewModel.getTransactionTypes())

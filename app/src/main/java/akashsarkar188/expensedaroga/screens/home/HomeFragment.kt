@@ -3,6 +3,7 @@ package akashsarkar188.expensedaroga.screens.home
 import akashsarkar188.expensedaroga.R
 import akashsarkar188.expensedaroga.databinding.FragmentHomeBinding
 import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
+import akashsarkar188.expensedaroga.utils.NotificationHelper
 import akashsarkar188.expensedaroga.utils.commonMethods.getCurrentFullMonthYearString
 import android.os.Bundle
 import android.util.Log
@@ -12,17 +13,18 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
 
 class HomeFragment : Fragment() {
 
     private var binding: FragmentHomeBinding? = null
-    private val viewModel : HomeViewModel by lazy {
+    private val viewModel: HomeViewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
-    private val adapter : HistoryAdapter by lazy {
-        HistoryAdapter()
-    }
+    private var adapter: HistoryAdapter? = null
 
     companion object {
         @JvmStatic
@@ -69,13 +71,14 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.monthlyTransactions?.observe(viewLifecycleOwner) {
-            adapter.addData(it)
+            adapter?.addData(it)
         }
     }
 
     private fun initHeaderView(transactionData: ArrayList<TransactionDataModel>) {
         binding?.apply {
-            introMessageTextView.text = "You have made ${transactionData.size} transactions so far \uD83E\uDD14"
+            introMessageTextView.text =
+                "You have made ${transactionData.size} transactions so far \uD83E\uDD14"
             currentMonthTextView.text = getCurrentFullMonthYearString()
             monthCreditAmount.text = "₹${viewModel.getTotalCreditAmount()}"
             monthDebitAmount.text = "₹${viewModel.getTotalDebitAmount()}"
@@ -87,8 +90,20 @@ class HomeFragment : Fragment() {
     private fun initHistory() {
         binding?.apply {
             monthsHistoryRecyclerView.layoutManager = LinearLayoutManager(context)
+            adapter = HistoryAdapter() {
+                context?.let { context ->
+                    NotificationHelper.openTransactionsInBubble(context, it.month!!)
+                }
+            }
             monthsHistoryRecyclerView.adapter = adapter
+            initSwipeBehavior(monthsHistoryRecyclerView)
         }
+    }
+
+    private fun initSwipeBehavior(recyclerView: RecyclerView) {
+        val recyclerViewSwipeHelper = RecyclerViewSwipeHelper(adapter!!)
+        val itemTouchHelper = ItemTouchHelper(recyclerViewSwipeHelper)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     override fun onDestroy() {
