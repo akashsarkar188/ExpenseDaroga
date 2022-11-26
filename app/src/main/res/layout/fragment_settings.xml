@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".screens.settings.SettingsFragment">
+
+        <TextView
+            android:id="@+id/greetingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/capriola"
+            android:text="Settings"
+            android:textColor="@color/blackOpacity90"
+            android:textSize="28dp" />
+
+        <RelativeLayout
+            android:layout_marginTop="28dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:textSize="14dp"
+                android:layout_centerVertical="true"
+                android:text="Bubble Bubble"
+                android:textColor="@color/blackOpacity90" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/bubbleToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:layout_centerVertical="true"
+                android:minWidth="0dp"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

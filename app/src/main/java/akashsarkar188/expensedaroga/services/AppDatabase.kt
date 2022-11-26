@@ -1,7 +1,7 @@
 package akashsarkar188.expensedaroga.services
 
-import akashsarkar188.expensedaroga.addTransaction.repository.TransactionDao
-import akashsarkar188.expensedaroga.addTransaction.model.TransactionDataModel
+import akashsarkar188.expensedaroga.screens.addTransaction.repository.TransactionDao
+import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
 import akashsarkar188.expensedaroga.utils.DATABASE_NAME
 import android.content.Context
 import androidx.room.Database

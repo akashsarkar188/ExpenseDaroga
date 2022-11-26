@@ -1,8 +1,8 @@
-package akashsarkar188.expensedaroga.addTransaction.adapter
+package akashsarkar188.expensedaroga.screens.addTransaction.adapter
 
 import akashsarkar188.expensedaroga.R
-import akashsarkar188.expensedaroga.addTransaction.model.TransactionType
-import akashsarkar188.expensedaroga.addTransaction.model.TransactionTypeModel
+import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionType
+import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionTypeModel
 import akashsarkar188.expensedaroga.databinding.RowTransactionTypeChipBinding
 import akashsarkar188.expensedaroga.utils.RECYCLER_DATA_VIEW
 import akashsarkar188.expensedaroga.utils.RECYCLER_NO_DATA_VIEW
@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.util.StringUtil
 
 class TransactionTypeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

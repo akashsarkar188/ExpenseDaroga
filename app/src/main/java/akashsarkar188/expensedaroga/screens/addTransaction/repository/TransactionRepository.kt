@@ -1,6 +1,6 @@
-package akashsarkar188.expensedaroga.addTransaction.repository
+package akashsarkar188.expensedaroga.screens.addTransaction.repository
 
-import akashsarkar188.expensedaroga.addTransaction.model.TransactionDataModel
+import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
 import akashsarkar188.expensedaroga.services.AppDatabase
 import akashsarkar188.expensedaroga.utils.ObjectFactory
 import akashsarkar188.expensedaroga.utils.ResultClass

@@ -1,8 +1,8 @@
-package akashsarkar188.expensedaroga.addTransaction.adapter
+package akashsarkar188.expensedaroga.screens.addTransaction.adapter
 
 import akashsarkar188.expensedaroga.R
-import akashsarkar188.expensedaroga.addTransaction.model.TransactionDataModel
-import akashsarkar188.expensedaroga.addTransaction.model.TransactionType
+import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
+import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionType
 import akashsarkar188.expensedaroga.databinding.CommonElementEmptyStateBinding
 import akashsarkar188.expensedaroga.databinding.RowTransactionBinding
 import akashsarkar188.expensedaroga.utils.RECYCLER_DATA_VIEW

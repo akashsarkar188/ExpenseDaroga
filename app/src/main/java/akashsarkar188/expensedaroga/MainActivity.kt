@@ -1,16 +1,17 @@
 package akashsarkar188.expensedaroga
 
-import akashsarkar188.expensedaroga.addTransaction.AddTransactionActivity
+import akashsarkar188.expensedaroga.screens.addTransaction.AddTransactionActivity
+import akashsarkar188.expensedaroga.databinding.ActivityMainBinding
+import akashsarkar188.expensedaroga.screens.home.HomeFragment
+import akashsarkar188.expensedaroga.services.FragmentHelper
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -18,16 +19,25 @@ import androidx.core.app.Person
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.databinding.DataBindingUtil
 
 
 class MainActivity : AppCompatActivity() {
+
+    private var binding : ActivityMainBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        installSplashScreen()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        FragmentHelper.setContext(this)
 
-        openAddTransaction(true, "Oct 2022")
+        binding?.openBubbleFAB?.setOnClickListener {
+            openAddTransaction(true, "Nov 2022")
+        }
+
+        FragmentHelper.addFragment(HomeFragment.newInstance())
     }
 
     private fun openAddTransaction(showInBubble: Boolean, monthYearString: String) {

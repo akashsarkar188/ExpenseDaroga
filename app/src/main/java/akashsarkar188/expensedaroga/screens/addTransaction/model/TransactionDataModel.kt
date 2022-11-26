@@ -1,7 +1,6 @@
-package akashsarkar188.expensedaroga.addTransaction.model
+package akashsarkar188.expensedaroga.screens.addTransaction.model
 
 import akashsarkar188.expensedaroga.utils.TABLE_TRANSACTION
-import akashsarkar188.expensedaroga.utils.TABLE_TRANSACTION_META
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity

@@ -1,17 +1,16 @@
-package akashsarkar188.expensedaroga.addTransaction
+package akashsarkar188.expensedaroga.screens.addTransaction
 
 import akashsarkar188.expensedaroga.R
-import akashsarkar188.expensedaroga.addTransaction.adapter.TransactionAdapter
-import akashsarkar188.expensedaroga.addTransaction.adapter.TransactionTypeAdapter
-import akashsarkar188.expensedaroga.addTransaction.model.TransactionCategories
-import akashsarkar188.expensedaroga.addTransaction.model.TransactionDataModel
+import akashsarkar188.expensedaroga.screens.addTransaction.adapter.TransactionAdapter
+import akashsarkar188.expensedaroga.screens.addTransaction.adapter.TransactionTypeAdapter
+import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionCategories
+import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
 import akashsarkar188.expensedaroga.databinding.ActivityAddTransactionBinding
 import akashsarkar188.expensedaroga.utils.BUNDLE_MONTH_YEAR_STRING
 import akashsarkar188.expensedaroga.utils.commonMethods.*
 import akashsarkar188.expensedaroga.utils.popup.transaction.ActionType
 import android.animation.LayoutTransition
 import android.app.DatePickerDialog
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.util.Log
 import android.view.View

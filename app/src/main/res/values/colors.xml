@@ -6,6 +6,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="blackOpacity60">#99000000</color>
+    <color name="blackOpacity90">#E6000000</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey_400">#BDBDBD</color>
@@ -18,4 +19,8 @@
     <color name="green_300">#81C784</color>
     <color name="blue_300">#64B5F6</color>
     <color name="purple_300">#9575CD</color>
+    <color name="colorGreyOverBlackBg">#E6858585</color>
+    <color name="basicBlack">#0e0e10</color>
+    <color name="themeGreen">#bfe940</color>
+    <color name="colorBlackOpacity5">#0D000000</color>
 </resources>

@@ -16,15 +16,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ExpenseDaroga"
+        android:theme="@style/Theme.CustomSplashScreenTheme"
         tools:targetApi="31">
 
         <!--Setting allowEmbedded, documentLaunchMode and resizeableActivity
         to use this activity for bubble conversation-->
         <activity
-            android:name=".addTransaction.AddTransactionActivity"
+            android:name="akashsarkar188.expensedaroga.screens.addTransaction.AddTransactionActivity"
             android:allowEmbedded="true"
             android:documentLaunchMode="always"
+            android:theme="@style/Theme.ExpenseDaroga"
             android:exported="false"
             android:resizeableActivity="true" />
 

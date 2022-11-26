@@ -1,4 +1,4 @@
-package akashsarkar188.expensedaroga.addTransaction.model
+package akashsarkar188.expensedaroga.screens.addTransaction.model
 
 import akashsarkar188.expensedaroga.R
 

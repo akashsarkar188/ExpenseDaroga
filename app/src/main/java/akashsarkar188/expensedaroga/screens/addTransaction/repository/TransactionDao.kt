@@ -1,11 +1,10 @@
-package akashsarkar188.expensedaroga.addTransaction.repository
+package akashsarkar188.expensedaroga.screens.addTransaction.repository
 
-import akashsarkar188.expensedaroga.addTransaction.model.TransactionDataModel
+import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
 import akashsarkar188.expensedaroga.utils.TABLE_TRANSACTION
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import java.sql.Timestamp
 
 @Dao
 interface TransactionDao {
