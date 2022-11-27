@@ -20,7 +20,7 @@ class RecyclerViewSwipeHelper(private val adapter: HistoryAdapter) :
     init {
         icon = ContextCompat.getDrawable(adapter.context, R.drawable.send_icon)
         icon?.setTint(ContextCompat.getColor(adapter.context, R.color.themeGreen))
-        background = ColorDrawable(ContextCompat.getColor(adapter.context, R.color.colorBlackOpacity5))
+        background = ColorDrawable(ContextCompat.getColor(adapter.context, R.color.themeGreenOpacity15))
     }
 
     override fun onMove(

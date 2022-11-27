@@ -25,9 +25,9 @@
                     android:layout_height="0dp"
                     android:layout_centerVertical="true"
                     app:cardCornerRadius="25dp"
-                    app:strokeWidth="0.5dp"
+                    app:cardElevation="0dp"
                     app:strokeColor="@color/grey_400"
-                    app:cardElevation="0dp">
+                    app:strokeWidth="0.5dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="0dp"
                     android:layout_toEndOf="@id/monthInitialCardView"
                     android:orientation="vertical">
 
@@ -67,12 +67,50 @@
                         android:id="@+id/monthTotalExpenseTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:fontFamily="@font/open_sans"
                         android:text="₹10,000"
                         android:textColor="@color/blackOpacity60"
-                        android:textSize="12dp" />
+                        android:textSize="12dp"
+                        android:visibility="gone" />
                 </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/selectMonthCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_centerVertical="true"
+                    app:cardMaxElevation="0dp"
+                    app:strokeColor="@color/themeGreen"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/themeGreenOpacity15"
+                        android:paddingHorizontal="8dp"
+                        android:gravity="center_vertical"
+                        android:paddingVertical="4dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:tint="@color/themeGreenDarker"
+                            app:srcCompat="@drawable/edit_date_icon"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:layout_height="wrap_content"
+                            android:text="Change Month"
+                            android:fontFamily="@font/open_sans"
+                            android:textSize="12dp"
+                            android:textColor="@color/themeGreenDarker"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 

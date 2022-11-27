@@ -26,12 +26,12 @@ fun getCurrentFullMonthYearString(): String {
     return SimpleDateFormat(DateTimeFormatHelper.FULL_MONTH_YEAR_FORMAT, Locale.US).format(Date())
 }
 
-fun getCurrentFullMonthYearStringFromMonthYear(monthYear: String): String {
+fun getFullMonthYearStringFromMonthYear(monthYear: String): String {
     val date = SimpleDateFormat(DateTimeFormatHelper.MONTH_YEAR_FORMAT, Locale.US).parse(monthYear)
     return SimpleDateFormat(DateTimeFormatHelper.FULL_MONTH_YEAR_FORMAT, Locale.US).format(date)
 }
 
-fun getCurrentMonthYearStringFromDate(date: Date): String {
+fun getMonthYearStringFromDate(date: Date): String {
     return SimpleDateFormat(DateTimeFormatHelper.MONTH_YEAR_FORMAT, Locale.US).format(date)
 }
 

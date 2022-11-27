@@ -166,7 +166,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/open_sans"
-                            android:text="Read SMS"
+                            android:text="Read SMS (Alpha)"
                             android:textColor="@color/colorGreyOverBlackBg"
                             android:textSize="14dp" />
 

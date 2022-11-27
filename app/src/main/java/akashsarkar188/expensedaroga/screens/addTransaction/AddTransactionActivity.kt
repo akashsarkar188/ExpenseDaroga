@@ -1,11 +1,12 @@
 package akashsarkar188.expensedaroga.screens.addTransaction
 
 import akashsarkar188.expensedaroga.R
+import akashsarkar188.expensedaroga.databinding.ActivityAddTransactionBinding
 import akashsarkar188.expensedaroga.screens.addTransaction.adapter.TransactionAdapter
 import akashsarkar188.expensedaroga.screens.addTransaction.adapter.TransactionTypeAdapter
 import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionCategories
 import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
-import akashsarkar188.expensedaroga.databinding.ActivityAddTransactionBinding
+import akashsarkar188.expensedaroga.services.SMSBroadcastReceiver
 import akashsarkar188.expensedaroga.utils.BUNDLE_MONTH_YEAR_STRING
 import akashsarkar188.expensedaroga.utils.ObjectFactory
 import akashsarkar188.expensedaroga.utils.commonMethods.*
@@ -13,18 +14,20 @@ import akashsarkar188.expensedaroga.utils.popup.transaction.ActionType
 import android.animation.LayoutTransition
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class AddTransactionActivity : AppCompatActivity() {
 
@@ -44,6 +47,7 @@ class AddTransactionActivity : AppCompatActivity() {
         onClickListeners()
         initObservers()
         viewModel.fetchTransactionsForThisMonthYear()
+        //initBroadcastReceiver()
     }
 
     private fun saveMonthInViewModel(intent: Intent) {
@@ -86,9 +90,8 @@ class AddTransactionActivity : AppCompatActivity() {
                     false
                 )
 
-            transactionAdapter = TransactionAdapter() {
-                action, dataObject ->
-                when(action) {
+            transactionAdapter = TransactionAdapter() { action, dataObject ->
+                when (action) {
                     ActionType.DELETE -> {
                         viewModel.deleteThisTransactions(dataObject)
                     }
@@ -106,7 +109,8 @@ class AddTransactionActivity : AppCompatActivity() {
             transactionsRecyclerView.adapter = transactionAdapter
             transactionTypeRecyclerView.adapter = transactionTypeAdapter
 
-            monthYearTextView.text = getCurrentFullMonthYearStringFromMonthYear(viewModel.selectedMonthYear.value!!)
+            monthYearTextView.text =
+                getFullMonthYearStringFromMonthYear(viewModel.selectedMonthYear.value!!)
         }
 
         transactionTypeAdapter.addData(viewModel.getTransactionTypes())
@@ -133,6 +137,32 @@ class AddTransactionActivity : AppCompatActivity() {
                         cal.set(Calendar.DAY_OF_MONTH, day)
 
                         viewModel.selectedDate.value = cal.time
+                    },
+                    getYearIntFromMonthYearStr(viewModel.selectedMonthYear.value),
+                    getMonthIntFromMonthYearStr(viewModel.selectedMonthYear.value),
+                    1
+                ).show()
+            }
+
+            selectMonthCardView.setOnClickListener {
+                DatePickerDialog(
+                    this@AddTransactionActivity,
+                    { view, year, month, day ->
+                        val cal = Calendar.getInstance()
+                        cal.set(Calendar.YEAR, year)
+                        cal.set(Calendar.MONTH, month)
+                        cal.set(Calendar.DAY_OF_MONTH, day)
+
+                        viewModel.selectedMonthYear.value = getMonthYearStringFromDate(cal.time)
+
+                        if (viewModel.selectedMonthYear.value == getCurrentMonthYearString()) {
+                            // current month is selected, so lets get the current date
+                            viewModel.selectedDate.value = getCurrentDateObject()
+                        } else {
+                            viewModel.selectedDate.value =
+                                getLastDateForMonthYear(viewModel.selectedMonthYear.value!!)
+                        }
+                        viewModel.fetchTransactionsForThisMonthYear()
                     },
                     getYearIntFromMonthYearStr(viewModel.selectedMonthYear.value),
                     getMonthIntFromMonthYearStr(viewModel.selectedMonthYear.value),
@@ -177,6 +207,11 @@ class AddTransactionActivity : AppCompatActivity() {
                     transactionDateTextView.text = "On ${getDateInDD_MMM(it)}"
                 }
             }
+        }
+
+        viewModel.selectedMonthYear.observe(this) {
+            binding?.monthYearTextView?.text =
+                getFullMonthYearStringFromMonthYear(viewModel.selectedMonthYear.value!!)
         }
 
         ObjectFactory.globalRefreshMutableLiveData.observe(this) {
@@ -230,5 +265,18 @@ class AddTransactionActivity : AppCompatActivity() {
             transactionNoteEditText.setText("")
             closeKeyboard(this@AddTransactionActivity)
         }
+    }
+
+    private val smsBroadcastReceiver: SMSBroadcastReceiver by lazy {
+        SMSBroadcastReceiver()
+    }
+
+    private fun initBroadcastReceiver() {
+        ContextCompat.registerReceiver(
+            this,
+            smsBroadcastReceiver,
+            IntentFilter("android.provider.Telephony.SMS_RECEIVED"),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
     }
 }

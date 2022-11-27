@@ -7,13 +7,11 @@ import akashsarkar188.expensedaroga.screens.addTransaction.adapter.EmptyStateVie
 import akashsarkar188.expensedaroga.utils.RECYCLER_DATA_VIEW
 import akashsarkar188.expensedaroga.utils.RECYCLER_NO_DATA_VIEW
 import akashsarkar188.expensedaroga.utils.commonMethods.*
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.TranslateAnimation
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -102,7 +100,7 @@ class HistoryAdapter(val callback: (month : MonthDataModel) -> Unit) : RecyclerV
     inner class HistoryViewHolder(private val binding: RowMonthlyHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindView(row: MonthDataModel, position: Int) {
-            binding.monthTextView.text = getCurrentFullMonthYearStringFromMonthYear(row.month!!)
+            binding.monthTextView.text = getFullMonthYearStringFromMonthYear(row.month!!)
             binding.monthInitialTextView.text = row.month!!.substring(0, 1)
             binding.debitedAmountTextView.text = "₹${formatAsCurrency(num = row.debitAmount)}"
             binding.debitedAmountTextView2.text = "₹${formatAsCurrency(num = row.debitAmount)}"

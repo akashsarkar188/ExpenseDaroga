@@ -5,7 +5,7 @@ import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionType
 import akashsarkar188.expensedaroga.screens.addTransaction.repository.TransactionRepository
 import akashsarkar188.expensedaroga.utils.ResultClass
 import akashsarkar188.expensedaroga.utils.commonMethods.getCurrentMonthYearString
-import akashsarkar188.expensedaroga.utils.commonMethods.getCurrentMonthYearStringFromDate
+import akashsarkar188.expensedaroga.utils.commonMethods.getMonthYearStringFromDate
 import akashsarkar188.expensedaroga.utils.commonMethods.getFirstDateForMonthYear
 import akashsarkar188.expensedaroga.utils.commonMethods.getLastDateForMonthYear
 import android.util.Log
@@ -106,7 +106,7 @@ class HomeViewModel : ViewModel() {
                     val date = Date()
                     date.time = data.date!!
 
-                    val monthYear = getCurrentMonthYearStringFromDate(date)
+                    val monthYear = getMonthYearStringFromDate(date)
 
                     // already contains the month so lets get the model and make changes
                     if (tempHashMap.containsKey(monthYear)) {
