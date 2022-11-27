@@ -12,7 +12,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/bottomNavigation">
+            android:layout_above="@id/bottomParentCardView">
 
             <FrameLayout
                 android:id="@+id/mainFrameContainer"
@@ -25,19 +25,69 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                app:iconPadding="0dp"
+                android:layout_marginBottom="24dp"
+                android:letterSpacing="0"
                 android:text="Passbook"
+                android:textAllCaps="false"
                 android:textColor="@color/basicBlack"
+                android:textSize="16dp"
                 app:icon="@drawable/rupee_icon"
                 app:iconTint="@color/basicBlack" />
         </RelativeLayout>
 
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigation"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bottomParentCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            app:menu="@menu/bottom_nav_menu" />
+            app:cardCornerRadius="0dp"
+            app:cardElevation="10dp">
+
+            <LinearLayout
+                android:id="@+id/bottomLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/homeContainerLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <include
+                        android:id="@+id/homeLayout"
+                        layout="@layout/bottom_nav_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/settingsContainerLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <include
+                        android:id="@+id/settingsLayout"
+                        layout="@layout/bottom_nav_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 </layout>

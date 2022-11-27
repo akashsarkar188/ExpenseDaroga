@@ -22,5 +22,7 @@
     <color name="colorGreyOverBlackBg">#E6858585</color>
     <color name="basicBlack">#0e0e10</color>
     <color name="themeGreen">#bfe940</color>
+    <color name="themeGreenDarker">#97BD23</color>
     <color name="colorBlackOpacity5">#0D000000</color>
+    <color name="themeGreenOpacity15">#26BFE940</color>
 </resources>

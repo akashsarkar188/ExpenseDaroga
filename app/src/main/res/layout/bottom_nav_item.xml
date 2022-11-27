@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/parentCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardMaxElevation="0dp"
+        app:rippleColor="@color/themeGreenOpacity15"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="30dp">
+
+        <LinearLayout
+            android:id="@+id/cardLinearLayout"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@color/themeGreenOpacity15"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:tint="@color/themeGreen"
+                app:srcCompat="@drawable/home_icon"/>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Home"
+                android:fontFamily="@font/open_sans"
+                android:textSize="14dp"
+                android:textColor="@color/themeGreenDarker"/>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
