@@ -6,8 +6,10 @@ import akashsarkar188.expensedaroga.databinding.RowMonthlyHistoryBinding
 import akashsarkar188.expensedaroga.screens.addTransaction.adapter.EmptyStateViewHolder
 import akashsarkar188.expensedaroga.utils.RECYCLER_DATA_VIEW
 import akashsarkar188.expensedaroga.utils.RECYCLER_NO_DATA_VIEW
+import akashsarkar188.expensedaroga.utils.commonMethods.formatAsCurrency
 import akashsarkar188.expensedaroga.utils.commonMethods.getCurrentFullMonthYearStringFromMonthYear
 import akashsarkar188.expensedaroga.utils.commonMethods.getCurrentMonthYearString
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
@@ -103,11 +105,11 @@ class HistoryAdapter(val callback: (month : MonthDataModel) -> Unit) : RecyclerV
         fun bindView(row: MonthDataModel, position: Int) {
             binding.monthTextView.text = getCurrentFullMonthYearStringFromMonthYear(row.month!!)
             binding.monthInitialTextView.text = row.month!!.substring(0, 1)
-            binding.debitedAmountTextView.text = "₹${row.debitAmount.toString()}"
-            binding.debitedAmountTextView2.text = "₹${row.debitAmount.toString()}"
-            binding.creditedAmountTextView.text = "₹${row.creditAmount.toString()}"
-            binding.loanTakenAmountTextView.text = "₹${row.loanTakenAmount.toString()}"
-            binding.loanGivenAmountTextView.text = "₹${row.loanGivenAmount.toString()}"
+            binding.debitedAmountTextView.text = "₹${formatAsCurrency(num = row.debitAmount)}"
+            binding.debitedAmountTextView2.text = "₹${formatAsCurrency(num = row.debitAmount)}"
+            binding.creditedAmountTextView.text = "₹${formatAsCurrency(num = row.creditAmount)}"
+            binding.loanTakenAmountTextView.text = "₹${formatAsCurrency(num = row.loanTakenAmount)}"
+            binding.loanGivenAmountTextView.text = "₹${formatAsCurrency(num = row.loanGivenAmount)}"
 
             binding.debitedAmountTextView.isSelected = true
             binding.debitedAmountTextView2.isSelected = true

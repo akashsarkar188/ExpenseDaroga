@@ -1,6 +1,7 @@
 package akashsarkar188.expensedaroga.utils.commonMethods
 
 import akashsarkar188.expensedaroga.R
+import akashsarkar188.expensedaroga.utils.currencyFormatter
 import android.content.res.Resources
 import android.graphics.Rect
 import android.util.TypedValue
@@ -60,4 +61,14 @@ fun locateView(v: View?): Rect? {
     location.right = location.left + v.width
     location.bottom = location.top + v.height
     return location
+}
+
+fun formatAsCurrency(str: String? = null, num: Double? = null) : String {
+    return try {
+        val number = num ?: str?.toDouble()
+        currencyFormatter.format(number)
+    } catch (e : Exception) {
+        e.printStackTrace()
+        "0.0"
+    }
 }

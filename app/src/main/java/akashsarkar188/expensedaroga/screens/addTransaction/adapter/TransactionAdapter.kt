@@ -7,6 +7,7 @@ import akashsarkar188.expensedaroga.databinding.CommonElementEmptyStateBinding
 import akashsarkar188.expensedaroga.databinding.RowTransactionBinding
 import akashsarkar188.expensedaroga.utils.RECYCLER_DATA_VIEW
 import akashsarkar188.expensedaroga.utils.RECYCLER_NO_DATA_VIEW
+import akashsarkar188.expensedaroga.utils.commonMethods.formatAsCurrency
 import akashsarkar188.expensedaroga.utils.commonMethods.getDateInDD_MMM
 import akashsarkar188.expensedaroga.utils.commonMethods.getTimeInHH_MM_A
 import akashsarkar188.expensedaroga.utils.commonMethods.locateView
@@ -93,7 +94,7 @@ class TransactionAdapter(val callback: (action: ActionType, dataObject: Transact
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(row: TransactionDataModel, position: Int) {
-            binding.amountTextView.text = "₹${row.amount.toString()}"
+            binding.amountTextView.text = "₹${formatAsCurrency(num = row.amount)}"
 
             if (row.meta?.transactionNote.isNullOrEmpty()) {
                 row.meta?.transactionNote = "Regular Transaction"
