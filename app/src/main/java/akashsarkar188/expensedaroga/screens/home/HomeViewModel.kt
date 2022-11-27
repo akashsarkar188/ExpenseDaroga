@@ -140,6 +140,10 @@ class HomeViewModel : ViewModel() {
                     monthList.add(it.value)
                 }
 
+                monthList.sortBy {
+                    it.month
+                }
+
                 monthlyTransactions!!.postValue(monthList)
             }
         }
