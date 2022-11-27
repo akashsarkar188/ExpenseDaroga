@@ -185,6 +185,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/historyTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -192,7 +193,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="History "
                 android:textColor="@color/blackOpacity60"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"

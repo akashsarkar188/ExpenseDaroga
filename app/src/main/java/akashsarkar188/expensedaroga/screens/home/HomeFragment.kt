@@ -96,7 +96,8 @@ class HomeFragment : Fragment() {
 
     private fun initHeaderView(transactionData: ArrayList<TransactionDataModel>) {
         binding?.apply {
-            currentMonthTextView.text = getCurrentFullMonthYearString()
+            currentMonthTextView.text = "${getCurrentFullMonthYearString()} 🔍"
+            historyTextView.text = "History 📊"
             monthCreditAmount.text = "₹${formatAsCurrency(viewModel.getTotalCreditAmount())}"
             monthDebitAmount.text = "₹${formatAsCurrency(viewModel.getTotalDebitAmount())}"
             monthLoanGivenAmount.text = "₹${formatAsCurrency(viewModel.getTotalLoanGivenAmount())}"

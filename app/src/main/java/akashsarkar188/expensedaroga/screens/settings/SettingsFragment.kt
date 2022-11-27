@@ -38,9 +38,14 @@ class SettingsFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false)
 
-        initView()
+
 
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initView()
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun initView() {
