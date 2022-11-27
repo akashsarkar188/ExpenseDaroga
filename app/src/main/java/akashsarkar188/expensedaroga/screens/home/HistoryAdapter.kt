@@ -6,15 +6,14 @@ import akashsarkar188.expensedaroga.databinding.RowMonthlyHistoryBinding
 import akashsarkar188.expensedaroga.screens.addTransaction.adapter.EmptyStateViewHolder
 import akashsarkar188.expensedaroga.utils.RECYCLER_DATA_VIEW
 import akashsarkar188.expensedaroga.utils.RECYCLER_NO_DATA_VIEW
-import akashsarkar188.expensedaroga.utils.commonMethods.formatAsCurrency
-import akashsarkar188.expensedaroga.utils.commonMethods.getCurrentFullMonthYearStringFromMonthYear
-import akashsarkar188.expensedaroga.utils.commonMethods.getCurrentMonthYearString
+import akashsarkar188.expensedaroga.utils.commonMethods.*
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.TranslateAnimation
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -120,8 +119,10 @@ class HistoryAdapter(val callback: (month : MonthDataModel) -> Unit) : RecyclerV
             binding.parentCardView.setOnClickListener {
                 if (binding.expandedLinearLayout.visibility == View.VISIBLE) {
                     binding.expandedLinearLayout.visibility = View.GONE
+                    binding.debitedAmountTextView.animateAlphaTo1()
                 } else {
                     binding.expandedLinearLayout.visibility = View.VISIBLE
+                    binding.debitedAmountTextView.animateAlphaTo0()
                 }
 
                 //callback(row)

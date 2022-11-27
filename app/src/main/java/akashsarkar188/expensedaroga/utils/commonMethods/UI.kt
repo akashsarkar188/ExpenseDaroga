@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.graphics.Rect
 import android.util.TypedValue
 import android.view.View
+import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationUtils
 import com.google.android.material.textfield.TextInputEditText
 
@@ -71,4 +72,18 @@ fun formatAsCurrency(str: String? = null, num: Double? = null) : String {
         e.printStackTrace()
         "0.0"
     }
+}
+
+fun View.animateAlphaTo0() {
+    val alphaAnim = AlphaAnimation(1f, 0f)
+    alphaAnim.duration = 500
+    alphaAnim.fillAfter = true
+    startAnimation(alphaAnim)
+}
+
+fun View.animateAlphaTo1() {
+    val alphaAnim = AlphaAnimation(0f, 1f)
+    alphaAnim.duration = 500
+    alphaAnim.fillAfter = true
+    startAnimation(alphaAnim)
 }
