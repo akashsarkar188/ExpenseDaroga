@@ -19,6 +19,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
@@ -111,10 +112,24 @@ class TransactionAdapter(val callback: (action: ActionType, dataObject: Transact
             val params = binding.parentCardView.layoutParams as RelativeLayout.LayoutParams
             when (row.meta?.transactionType) {
                 TransactionType.DEBIT -> {
+                    params.removeRule(RelativeLayout.ALIGN_PARENT_START)
                     params.addRule(RelativeLayout.ALIGN_PARENT_END)
+                    binding.amountTextView.setTextColor(ContextCompat.getColor(context, R.color.red_400))
+                }
+                TransactionType.LOAN_TAKEN -> {
+                    params.removeRule(RelativeLayout.ALIGN_PARENT_END)
+                    params.addRule(RelativeLayout.ALIGN_PARENT_START)
+                    binding.amountTextView.setTextColor(ContextCompat.getColor(context, R.color.purple_400))
+                }
+                TransactionType.LOAN_GIVEN -> {
+                    params.removeRule(RelativeLayout.ALIGN_PARENT_END)
+                    params.addRule(RelativeLayout.ALIGN_PARENT_START)
+                    binding.amountTextView.setTextColor(ContextCompat.getColor(context, R.color.blue_400))
                 }
                 else -> {
+                    params.removeRule(RelativeLayout.ALIGN_PARENT_END)
                     params.addRule(RelativeLayout.ALIGN_PARENT_START)
+                    binding.amountTextView.setTextColor(ContextCompat.getColor(context, R.color.green_400))
                 }
             }
             binding.parentCardView.layoutParams = params

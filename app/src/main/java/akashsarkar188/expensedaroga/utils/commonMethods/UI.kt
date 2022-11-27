@@ -2,12 +2,14 @@ package akashsarkar188.expensedaroga.utils.commonMethods
 
 import akashsarkar188.expensedaroga.R
 import akashsarkar188.expensedaroga.utils.currencyFormatter
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Rect
 import android.util.TypedValue
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import com.google.android.material.textfield.TextInputEditText
 
 
@@ -30,7 +32,7 @@ fun TextInputEditText.toDouble(): Double {
     return 0.0
 }
 
-fun String.capitalize() : String {
+fun String.capitalize(): String {
     if (this.isNotEmpty()) {
         return substring(0, 1).uppercase() + substring(1).lowercase()
     }
@@ -42,10 +44,12 @@ fun View.shakeView() {
     startAnimation(shake)
 }
 
-val Number.toPx get() = TypedValue.applyDimension(
-    TypedValue.COMPLEX_UNIT_DIP,
-    this.toFloat(),
-    Resources.getSystem().displayMetrics)
+val Number.toPx
+    get() = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.toFloat(),
+        Resources.getSystem().displayMetrics
+    )
 
 fun locateView(v: View?): Rect? {
     val loc_int = IntArray(2)
@@ -64,11 +68,11 @@ fun locateView(v: View?): Rect? {
     return location
 }
 
-fun formatAsCurrency(str: String? = null, num: Double? = null) : String {
+fun formatAsCurrency(str: String? = null, num: Double? = null): String {
     return try {
         val number = num ?: str?.toDouble()
         currencyFormatter.format(number)
-    } catch (e : Exception) {
+    } catch (e: Exception) {
         e.printStackTrace()
         "0.0"
     }
@@ -86,4 +90,11 @@ fun View.animateAlphaTo1() {
     alphaAnim.duration = 500
     alphaAnim.fillAfter = true
     startAnimation(alphaAnim)
+}
+
+fun TextInputEditText.openKeyboard() {
+    requestFocus()
+    val imm: InputMethodManager? =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+    imm?.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
 }

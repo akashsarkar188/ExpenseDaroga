@@ -9,12 +9,12 @@ import kotlinx.coroutines.withContext
 
 object TransactionRepository {
 
-    private val appDatabase:  AppDatabase by lazy {
+    private val appDatabase: AppDatabase by lazy {
         ObjectFactory.appDatabaseInstance
     }
 
-    suspend fun getAllTransactions() : ResultClass  {
-        return withContext(Dispatchers.IO){
+    suspend fun getAllTransactions(): ResultClass {
+        return withContext(Dispatchers.IO) {
             val transactionDao = appDatabase.transactionDao()
             val transactionsList = transactionDao.getAllTransactions()
 
@@ -22,31 +22,38 @@ object TransactionRepository {
         }
     }
 
-    suspend fun getTransactionBetweenTimestamps(fromTimeStamp : Long, toTimeStamp : Long) : ResultClass  {
-        return withContext(Dispatchers.IO){
+    suspend fun getTransactionBetweenTimestamps(
+        fromTimeStamp: Long,
+        toTimeStamp: Long
+    ): ResultClass {
+        return withContext(Dispatchers.IO) {
             val transactionDao = appDatabase.transactionDao()
-            val transactionsList = transactionDao.getTransactionsBetweenTimestamp(fromTimeStamp, toTimeStamp)
+            val transactionsList =
+                transactionDao.getTransactionsBetweenTimestamp(
+                    (fromTimeStamp - (1000 * 60 * 60 * 24)), // to consider the whole first day going back 24 hours
+                    toTimeStamp
+                )
 
             ResultClass(null, transactionsList)
         }
     }
 
-    suspend fun addTransaction(transaction : TransactionDataModel) {
-        withContext(Dispatchers.IO){
+    suspend fun addTransaction(transaction: TransactionDataModel) {
+        withContext(Dispatchers.IO) {
             val transactionDao = appDatabase.transactionDao()
             transactionDao.addTransaction(transaction)
         }
 
     }
 
-    suspend fun deleteAllTransactions(){
+    suspend fun deleteAllTransactions() {
         withContext(Dispatchers.IO) {
             val transactionDao = appDatabase.transactionDao()
             transactionDao.deleteAllTransactions()
         }
     }
 
-    suspend fun deleteThisTransactions(transactionId: Int){
+    suspend fun deleteThisTransactions(transactionId: Int) {
         withContext(Dispatchers.IO) {
             val transactionDao = appDatabase.transactionDao()
             transactionDao.deleteTransactionById(transactionId)

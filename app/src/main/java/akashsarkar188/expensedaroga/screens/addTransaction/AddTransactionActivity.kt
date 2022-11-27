@@ -22,6 +22,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginBottom
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -231,12 +232,14 @@ class AddTransactionActivity : AppCompatActivity() {
                         amountCardView.radius = 30.toPx
                         params.marginStart = 16.toPx.toInt()
                         params.marginEnd = 16.toPx.toInt()
+                        params.bottomMargin = 10.toPx.toInt()
                         transactionMetaInputLinearLayout.visibility = View.GONE
                         closeKeyboard(this@AddTransactionActivity)
                     } else {
                         amountCardView.radius = 0.toPx
                         params.marginStart = 0
                         params.marginEnd = 0
+                        params.bottomMargin = 0.toPx.toInt()
                         transactionMetaInputLinearLayout.visibility = View.VISIBLE
                     }
                     (amountCardView as ViewGroup).layoutTransition.enableTransitionType(
@@ -252,6 +255,7 @@ class AddTransactionActivity : AppCompatActivity() {
         binding?.let {
             if (it.transactionAmountEditText.isNullOrEmpty()) {
                 it.transactionAmountEditText.shakeView()
+                it.transactionAmountEditText.openKeyboard()
                 return false
             }
             return true
@@ -272,11 +276,11 @@ class AddTransactionActivity : AppCompatActivity() {
     }
 
     private fun initBroadcastReceiver() {
-        ContextCompat.registerReceiver(
+        /*ContextCompat.registerReceiver(
             this,
             smsBroadcastReceiver,
             IntentFilter("android.provider.Telephony.SMS_RECEIVED"),
             ContextCompat.RECEIVER_NOT_EXPORTED
-        )
+        )*/
     }
 }
