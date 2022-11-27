@@ -30,6 +30,7 @@ object FragmentHelper {
                 doIfTrue(addToBackstack) {
                     fragmentTransaction.addToBackStack(fragment::class.java.canonicalName)
                 }
+                lastActiveFragment = WeakReference(fragment)
                 fragmentTransaction.commitAllowingStateLoss()
             }
         }
