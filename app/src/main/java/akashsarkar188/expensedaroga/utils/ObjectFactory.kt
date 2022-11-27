@@ -12,4 +12,8 @@ object ObjectFactory {
     val globalRefreshMutableLiveData: MutableLiveData<Boolean> by lazy {
         MutableLiveData()
     }
+
+    val userNameChangeMutableLiveData: MutableLiveData<Boolean> by lazy {
+        MutableLiveData()
+    }
 }

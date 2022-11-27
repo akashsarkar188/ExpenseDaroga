@@ -25,11 +25,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                app:iconSize="16dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
-                app:iconPadding="0dp"
                 android:layout_marginBottom="24dp"
                 android:letterSpacing="0"
                 android:text="Passbook"
@@ -37,6 +35,8 @@
                 android:textColor="@color/basicBlack"
                 android:textSize="16dp"
                 app:icon="@drawable/rupee_icon"
+                app:iconPadding="4dp"
+                app:iconSize="16dp"
                 app:iconTint="@color/basicBlack" />
         </RelativeLayout>
 

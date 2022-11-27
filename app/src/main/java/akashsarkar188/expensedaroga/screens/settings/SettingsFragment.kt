@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 
@@ -47,6 +49,23 @@ class SettingsFragment : Fragment() {
 
             bubbleToggle.setOnCheckedChangeListener { compoundButton, checked ->
                 SharedPreferenceHelper.setShouldBubble(checked)
+            }
+
+            smsToggle.isChecked = SharedPreferenceHelper.readSms()
+
+            smsToggle.setOnCheckedChangeListener { compoundButton, checked ->
+                SharedPreferenceHelper.setReadSms(checked)
+            }
+
+            userNameEditText.setText(SharedPreferenceHelper.getUserName())
+
+            userNameEditText.addTextChangedListener {
+                it?.toString()?.let { userInput ->
+                    context?.let { context ->
+                        userNameInputLayout.endIconDrawable = ContextCompat.getDrawable(context, R.drawable.check_icon)
+                        SharedPreferenceHelper.setUserName(userInput)
+                    }
+                }
             }
         }
     }

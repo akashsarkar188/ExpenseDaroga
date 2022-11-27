@@ -3,12 +3,15 @@ package akashsarkar188.expensedaroga.screens.home
 import akashsarkar188.expensedaroga.R
 import akashsarkar188.expensedaroga.databinding.FragmentHomeBinding
 import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
+import akashsarkar188.expensedaroga.services.SharedPreferenceHelper
 import akashsarkar188.expensedaroga.utils.NotificationHelper
 import akashsarkar188.expensedaroga.utils.ObjectFactory
 import akashsarkar188.expensedaroga.utils.commonMethods.doIfTrue
 import akashsarkar188.expensedaroga.utils.commonMethods.formatAsCurrency
 import akashsarkar188.expensedaroga.utils.commonMethods.getCurrentFullMonthYearString
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -83,6 +86,12 @@ class HomeFragment : Fragment() {
                 viewModel.fetchAllTransactions()
             }
         }
+
+        ObjectFactory.userNameChangeMutableLiveData.observe(viewLifecycleOwner) {
+            doIfTrue(it) {
+                binding?.greetingTextView?.text = "What's Up ${SharedPreferenceHelper.getUserName()}!"
+            }
+        }
     }
 
     private fun initHeaderView(transactionData: ArrayList<TransactionDataModel>) {
@@ -100,6 +109,8 @@ class HomeFragment : Fragment() {
                 introMessageTextView.text =
                     "Expenses are getting out of hands 🫣"
             }
+
+            greetingTextView.text = "What's Up ${SharedPreferenceHelper.getUserName()}!"
         }
     }
 

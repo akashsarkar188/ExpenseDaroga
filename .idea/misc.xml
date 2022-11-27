@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/akash/AndroidStudioProjects/Github/ExpenseDaroga/app/src/main/res/drawable/check_icon.xml" value="0.207" />
         <entry key="..\:/Users/akash/AndroidStudioProjects/Github/ExpenseDaroga/app/src/main/res/drawable/edit_date_icon.xml" value="0.1825" />
         <entry key="..\:/Users/akash/AndroidStudioProjects/Github/ExpenseDaroga/app/src/main/res/drawable/send_icon.xml" value="0.218" />
         <entry key="..\:/Users/akash/AndroidStudioProjects/Github/ExpenseDaroga/app/src/main/res/layout/activity_add_transaction.xml" value="0.264" />
