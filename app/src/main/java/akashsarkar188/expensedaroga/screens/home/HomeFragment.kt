@@ -4,6 +4,8 @@ import akashsarkar188.expensedaroga.R
 import akashsarkar188.expensedaroga.databinding.FragmentHomeBinding
 import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
 import akashsarkar188.expensedaroga.utils.NotificationHelper
+import akashsarkar188.expensedaroga.utils.ObjectFactory
+import akashsarkar188.expensedaroga.utils.commonMethods.doIfTrue
 import akashsarkar188.expensedaroga.utils.commonMethods.getCurrentFullMonthYearString
 import android.os.Bundle
 import android.util.Log
@@ -73,17 +75,30 @@ class HomeFragment : Fragment() {
         viewModel.monthlyTransactions?.observe(viewLifecycleOwner) {
             adapter?.addData(it)
         }
+
+        ObjectFactory.globalRefreshMutableLiveData.observe(viewLifecycleOwner) {
+            doIfTrue(it) {
+                viewModel.fetchTransactionsForThisMonthYear()
+                viewModel.fetchAllTransactions()
+            }
+        }
     }
 
     private fun initHeaderView(transactionData: ArrayList<TransactionDataModel>) {
         binding?.apply {
-            introMessageTextView.text =
-                "You have made ${transactionData.size} transactions so far \uD83E\uDD14"
             currentMonthTextView.text = getCurrentFullMonthYearString()
             monthCreditAmount.text = "₹${viewModel.getTotalCreditAmount()}"
             monthDebitAmount.text = "₹${viewModel.getTotalDebitAmount()}"
             monthLoanGivenAmount.text = "₹${viewModel.getTotalLoanGivenAmount()}"
             monthLoanTakenAmount.text = "₹${viewModel.getTotalLoanTakenAmount()}"
+
+            if (viewModel.isCreditGreaterThanDebit()) {
+                introMessageTextView.text =
+                    "Everything is under control 🙌"
+            } else {
+                introMessageTextView.text =
+                    "Expenses are getting out of hands 🫣"
+            }
         }
     }
 

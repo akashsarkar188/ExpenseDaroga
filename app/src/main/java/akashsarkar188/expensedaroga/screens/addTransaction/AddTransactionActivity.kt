@@ -7,6 +7,7 @@ import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionCate
 import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
 import akashsarkar188.expensedaroga.databinding.ActivityAddTransactionBinding
 import akashsarkar188.expensedaroga.utils.BUNDLE_MONTH_YEAR_STRING
+import akashsarkar188.expensedaroga.utils.ObjectFactory
 import akashsarkar188.expensedaroga.utils.commonMethods.*
 import akashsarkar188.expensedaroga.utils.popup.transaction.ActionType
 import android.animation.LayoutTransition
@@ -98,6 +99,7 @@ class AddTransactionActivity : AppCompatActivity() {
 
                     }
                 }
+                ObjectFactory.globalRefreshMutableLiveData.value = true
             }
             transactionTypeAdapter = TransactionTypeAdapter()
 
@@ -116,6 +118,7 @@ class AddTransactionActivity : AppCompatActivity() {
                 if (validateData()) {
                     viewModel.addTransaction(prepareModelToSave())
                     clearInputsAndCloseKeyboard()
+                    ObjectFactory.globalRefreshMutableLiveData.value = true
                 }
             }
 
@@ -173,6 +176,12 @@ class AddTransactionActivity : AppCompatActivity() {
                 binding?.apply {
                     transactionDateTextView.text = "On ${getDateInDD_MMM(it)}"
                 }
+            }
+        }
+
+        ObjectFactory.globalRefreshMutableLiveData.observe(this) {
+            doIfTrue(it) {
+                viewModel.fetchTransactionsForThisMonthYear()
             }
         }
 

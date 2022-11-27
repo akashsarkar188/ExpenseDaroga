@@ -38,10 +38,10 @@ class HomeViewModel : ViewModel() {
             return field
         }
 
-    private var totalCreditedAmount = "0"
-    private var totalDebitedAmount = "0"
-    private var totalLoanTakenAmount = "0"
-    private var totalLoanGivenAmount = "0"
+    private var totalCreditedAmount = "0.0"
+    private var totalDebitedAmount = "0.0"
+    private var totalLoanTakenAmount = "0.0"
+    private var totalLoanGivenAmount = "0.0"
 
     fun fetchTransactionsForThisMonthYear() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -152,4 +152,8 @@ class HomeViewModel : ViewModel() {
     fun getTotalLoanGivenAmount() = totalLoanGivenAmount
 
     fun getTotalLoanTakenAmount() = totalLoanTakenAmount
+
+    fun isCreditGreaterThanDebit(): Boolean {
+        return totalCreditedAmount.toDouble() > totalDebitedAmount.toDouble()
+    }
 }
