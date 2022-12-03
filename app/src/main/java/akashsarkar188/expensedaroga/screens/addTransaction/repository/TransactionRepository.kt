@@ -30,7 +30,7 @@ object TransactionRepository {
             val transactionDao = appDatabase.transactionDao()
             val transactionsList =
                 transactionDao.getTransactionsBetweenTimestamp(
-                    (fromTimeStamp - (1000 * 60 * 60 * 24)), // to consider the whole first day going back 24 hours
+                    fromTimeStamp, // to consider the whole first day going back 24 hours
                     toTimeStamp
                 )
 

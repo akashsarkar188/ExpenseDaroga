@@ -5,9 +5,9 @@ import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionType
 import akashsarkar188.expensedaroga.screens.addTransaction.repository.TransactionRepository
 import akashsarkar188.expensedaroga.utils.ResultClass
 import akashsarkar188.expensedaroga.utils.commonMethods.getCurrentMonthYearString
-import akashsarkar188.expensedaroga.utils.commonMethods.getMonthYearStringFromDate
 import akashsarkar188.expensedaroga.utils.commonMethods.getFirstDateForMonthYear
 import akashsarkar188.expensedaroga.utils.commonMethods.getLastDateForMonthYear
+import akashsarkar188.expensedaroga.utils.commonMethods.getMonthYearStringFromDate
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -159,5 +159,19 @@ class HomeViewModel : ViewModel() {
 
     fun isCreditGreaterThanDebit(): Boolean {
         return totalCreditedAmount.toDouble() > totalDebitedAmount.toDouble()
+    }
+
+    fun getBalanceAmount(): String =
+        ((totalCreditedAmount.toDouble() + totalLoanTakenAmount.toDouble())
+                - (totalDebitedAmount.toDouble() + totalLoanGivenAmount.toDouble())).toString()
+
+    fun isBalanceAmountPositive(): Boolean? {
+        return if (((totalCreditedAmount.toDouble() + totalLoanTakenAmount.toDouble())
+                - (totalDebitedAmount.toDouble() + totalLoanGivenAmount.toDouble())) == 0.0) {
+            null
+        } else {
+            ((totalCreditedAmount.toDouble() + totalLoanTakenAmount.toDouble())
+                    - (totalDebitedAmount.toDouble() + totalLoanGivenAmount.toDouble()) > 0)
+        }
     }
 }

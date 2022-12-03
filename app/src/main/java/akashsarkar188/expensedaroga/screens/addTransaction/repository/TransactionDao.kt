@@ -12,7 +12,7 @@ interface TransactionDao {
     @Query("select * from `$TABLE_TRANSACTION`")
     fun getAllTransactions() : List<TransactionDataModel>
 
-    @Query("select * from `$TABLE_TRANSACTION` where date between :fromTimestamp-1 and :toTimestamp")
+    @Query("select * from `$TABLE_TRANSACTION` where date between :fromTimestamp and :toTimestamp")
     fun getTransactionsBetweenTimestamp(fromTimestamp: Long, toTimestamp: Long) : List<TransactionDataModel>
 
     @Insert

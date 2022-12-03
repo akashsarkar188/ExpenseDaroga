@@ -43,20 +43,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    app:cardCornerRadius="6dp"
-                    app:strokeColor="#17191a"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:strokeWidth="5dp"
                     android:layout_marginBottom="20dp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="6dp"
                     app:cardElevation="0dp"
-                    app:cardMaxElevation="0dp">
+                    app:cardMaxElevation="0dp"
+                    app:strokeColor="#17191a"
+                    app:strokeWidth="5dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:padding="8dp"
-                        android:background="#17191a"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:background="#17191a"
+                        android:orientation="vertical"
+                        android:padding="8dp">
 
                         <TextView
                             android:id="@+id/currentMonthTextView"
@@ -70,8 +70,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
                             android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
                             android:paddingVertical="6dp"
                             android:weightSum="2">
 
@@ -179,6 +179,59 @@
                                 android:textColor="@color/white"
                                 android:textSize="15dp" />
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="6dp"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:animateLayoutChanges="true"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/availableBalanceTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/open_sans"
+                                    android:text="Available Balance"
+                                    android:drawableTint="@color/colorGreyOverBlackBg"
+                                    android:drawablePadding="10dp"
+                                    android:gravity="center_vertical"
+                                    android:drawableEnd="@drawable/info_icon"
+                                    android:textColor="@color/colorGreyOverBlackBg"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/availableBalanceInfoTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone"
+                                    android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/open_sans"
+                                    android:text="(Credit + Loan Taken) - (Debit + Loan Given)"
+                                    android:gravity="center_vertical"
+                                    android:textColor="@color/colorGreyOverBlackBg"
+                                    android:textSize="10dp" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/availableBalanceAmount"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/open_sans_semibold"
+                                android:text="Rs.1000000"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/white"
+                                android:textSize="15dp" />
+                        </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -188,18 +241,18 @@
                 android:id="@+id/historyTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="24dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="History "
                 android:textColor="@color/blackOpacity60"
                 android:textSize="16dp" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/monthsHistoryRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:id="@+id/monthsHistoryRecyclerView"/>
+                android:layout_marginTop="12dp" />
         </LinearLayout>
 
     </RelativeLayout>

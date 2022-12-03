@@ -45,6 +45,8 @@ fun getLastDateForMonthYear(monthYear: String): Date {
     calendar.time = getFirstDateForMonthYear(monthYear)
 
     calendar[Calendar.DAY_OF_MONTH] = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+    calendar[Calendar.HOUR_OF_DAY] = 11
+    calendar[Calendar.MINUTE] = 59
 
     return calendar.time
 }
@@ -56,6 +58,7 @@ fun getFirstDateForMonthYear(monthYearStr: String): Date {
     c[Calendar.MONTH] = mMonth
     c[Calendar.YEAR] = mYear
     c[Calendar.DAY_OF_MONTH] = 1
+    c[Calendar.HOUR_OF_DAY] = 0
     return c.time
 }
 

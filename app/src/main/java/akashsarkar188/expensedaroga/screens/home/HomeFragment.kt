@@ -6,9 +6,7 @@ import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionData
 import akashsarkar188.expensedaroga.services.SharedPreferenceHelper
 import akashsarkar188.expensedaroga.utils.NotificationHelper
 import akashsarkar188.expensedaroga.utils.ObjectFactory
-import akashsarkar188.expensedaroga.utils.commonMethods.doIfTrue
-import akashsarkar188.expensedaroga.utils.commonMethods.formatAsCurrency
-import akashsarkar188.expensedaroga.utils.commonMethods.getCurrentFullMonthYearString
+import akashsarkar188.expensedaroga.utils.commonMethods.*
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -16,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -53,12 +52,23 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
+        onClickListeners()
         initObservers()
         initHistory()
         viewModel.fetchTransactionsForThisMonthYear()
         viewModel.fetchAllTransactions()
 
         return binding?.root
+    }
+
+    private fun onClickListeners() {
+        binding?.availableBalanceTextView?.setOnClickListener {
+            if (binding?.availableBalanceInfoTextView?.visibility == View.VISIBLE) {
+                binding?.availableBalanceInfoTextView?.visibility = View.GONE
+            } else {
+                binding?.availableBalanceInfoTextView?.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun initObservers() {
@@ -102,6 +112,7 @@ class HomeFragment : Fragment() {
             monthDebitAmount.text = "₹${formatAsCurrency(viewModel.getTotalDebitAmount())}"
             monthLoanGivenAmount.text = "₹${formatAsCurrency(viewModel.getTotalLoanGivenAmount())}"
             monthLoanTakenAmount.text = "₹${formatAsCurrency(viewModel.getTotalLoanTakenAmount())}"
+            availableBalanceAmount.text = "₹${formatAsCurrency(viewModel.getBalanceAmount())}"
 
             if (viewModel.isCreditGreaterThanDebit()) {
                 introMessageTextView.text =
@@ -109,6 +120,18 @@ class HomeFragment : Fragment() {
             } else {
                 introMessageTextView.text =
                     "Expenses are getting out of hands 🫣"
+            }
+
+            context?.let { context ->
+                doIfTrue (viewModel.isBalanceAmountPositive()) {
+                    availableBalanceAmount.setTextColor(ContextCompat.getColor(context, R.color.themeGreen))
+                }
+                doIfFalseOrNull(viewModel.isBalanceAmountPositive()){
+                    availableBalanceAmount.setTextColor(ContextCompat.getColor(context, R.color.white))
+                }
+                doIfFalse(viewModel.isBalanceAmountPositive()){
+                    availableBalanceAmount.setTextColor(ContextCompat.getColor(context, R.color.red_300))
+                }
             }
 
             greetingTextView.text = "What's Up ${SharedPreferenceHelper.getUserName()}!"
