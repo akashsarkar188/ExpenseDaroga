@@ -15,6 +15,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -114,6 +115,8 @@ class MainActivity : AppCompatActivity() {
             (parentContainer as ViewGroup).layoutTransition.enableTransitionType(
                 LayoutTransition.CHANGING
             )
+            val parentLayoutParams = parentContainer.getLayoutParams() as LinearLayout.LayoutParams
+
             doIfTrue(setSelected) {
                 cardLinearLayout.setBackgroundColor(
                     ContextCompat.getColor(
@@ -133,6 +136,7 @@ class MainActivity : AppCompatActivity() {
                         R.color.themeGreenDarker
                     )
                 ))
+                parentLayoutParams.weight = 1.4f
                 title.visibility = View.VISIBLE
             }
 
@@ -149,6 +153,7 @@ class MainActivity : AppCompatActivity() {
                         R.color.basicBlack
                     )
                 )
+                parentLayoutParams.weight = 0.8f
                 title.visibility = View.GONE
             }
         }
