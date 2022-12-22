@@ -23,7 +23,7 @@
         <!--Setting allowEmbedded, documentLaunchMode and resizeableActivity
         to use this activity for bubble conversation-->
         <activity
-            android:name="akashsarkar188.expensedaroga.screens.addTransaction.AddTransactionActivity"
+            android:name="akashsarkar188.expensedaroga.screens.addTransaction.AddTransactionBubbleActivity"
             android:allowEmbedded="true"
             android:documentLaunchMode="always"
             android:theme="@style/Theme.ExpenseDaroga"

@@ -2,9 +2,10 @@ package akashsarkar188.expensedaroga
 
 import akashsarkar188.expensedaroga.databinding.ActivityMainBinding
 import akashsarkar188.expensedaroga.databinding.BottomNavItemBinding
+import akashsarkar188.expensedaroga.screens.addTransaction.AddTransactionFragment
 import akashsarkar188.expensedaroga.screens.home.HomeFragment
 import akashsarkar188.expensedaroga.screens.settings.SettingsFragment
-import akashsarkar188.expensedaroga.services.FragmentHelper
+import akashsarkar188.expensedaroga.services.MainActivityFragmentHelper
 import akashsarkar188.expensedaroga.utils.NotificationHelper
 import akashsarkar188.expensedaroga.utils.commonMethods.doIfFalse
 import akashsarkar188.expensedaroga.utils.commonMethods.doIfTrue
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        FragmentHelper.setContext(this)
+        MainActivityFragmentHelper.setContext(this)
 
         init()
     }
@@ -42,34 +43,60 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val homeFragment : HomeFragment by lazy {
-        HomeFragment()
+        HomeFragment.newInstance()
     }
     private val settingsFragment : SettingsFragment by lazy {
-        SettingsFragment()
+        SettingsFragment.newInstance()
+    }
+    private val addTransactionFragment : AddTransactionFragment by lazy {
+        AddTransactionFragment.newInstance(null)
     }
 
     private fun initBottomNavigation() {
         binding?.homeLayout?.parentCard?.setOnClickListener {
             changeBottomNavSelection(binding?.homeContainerLinearLayout, binding?.homeLayout, true)
+            changeBottomNavSelection(binding?.addTransactionContainerLinearLayout, binding?.addTransactionsLayout, false)
             changeBottomNavSelection(binding?.settingsContainerLinearLayout, binding?.settingsLayout, false)
-            if (FragmentHelper.isFragmentAdded(homeFragment)) {
-                FragmentHelper.showThisFragment(homeFragment)
+
+            binding?.openBubbleFAB?.visibility = View.VISIBLE
+
+            if (MainActivityFragmentHelper.isFragmentAdded(homeFragment)) {
+                MainActivityFragmentHelper.showThisFragment(homeFragment)
             } else {
-                FragmentHelper.addFragment(homeFragment, false)
+                MainActivityFragmentHelper.addFragment(homeFragment, false)
             }
         }
 
         binding?.settingsLayout?.parentCard?.setOnClickListener {
             changeBottomNavSelection(binding?.homeContainerLinearLayout, binding?.homeLayout, false)
+            changeBottomNavSelection(binding?.addTransactionContainerLinearLayout, binding?.addTransactionsLayout, false)
             changeBottomNavSelection(binding?.settingsContainerLinearLayout, binding?.settingsLayout, true)
-            if (FragmentHelper.isFragmentAdded(settingsFragment)) {
-                FragmentHelper.showThisFragment(settingsFragment)
+
+            binding?.openBubbleFAB?.visibility = View.VISIBLE
+
+            if (MainActivityFragmentHelper.isFragmentAdded(settingsFragment)) {
+                MainActivityFragmentHelper.showThisFragment(settingsFragment)
             } else {
-                FragmentHelper.addFragment(settingsFragment, false)
+                MainActivityFragmentHelper.addFragment(settingsFragment, false)
+            }
+        }
+
+        binding?.addTransactionsLayout?.parentCard?.setOnClickListener {
+            changeBottomNavSelection(binding?.homeContainerLinearLayout, binding?.homeLayout, false)
+            changeBottomNavSelection(binding?.addTransactionContainerLinearLayout, binding?.addTransactionsLayout, true)
+            changeBottomNavSelection(binding?.settingsContainerLinearLayout, binding?.settingsLayout, false)
+
+            binding?.openBubbleFAB?.visibility = View.GONE
+
+            if (MainActivityFragmentHelper.isFragmentAdded(addTransactionFragment)) {
+                MainActivityFragmentHelper.showThisFragment(addTransactionFragment)
+            } else {
+                MainActivityFragmentHelper.addFragment(addTransactionFragment, false)
             }
         }
 
         setupLayout(binding?.homeLayout, "Home", R.drawable.home_icon)
+        setupLayout(binding?.addTransactionsLayout, "Transactions", R.drawable.rupee_icon)
         setupLayout(binding?.settingsLayout, "Settings", R.drawable.setting_icon)
 
         binding?.homeLayout?.parentCard?.performClick()

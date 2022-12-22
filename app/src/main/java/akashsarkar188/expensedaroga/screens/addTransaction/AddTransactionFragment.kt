@@ -1,12 +1,11 @@
 package akashsarkar188.expensedaroga.screens.addTransaction
 
 import akashsarkar188.expensedaroga.R
-import akashsarkar188.expensedaroga.databinding.ActivityAddTransactionBinding
+import akashsarkar188.expensedaroga.databinding.FragmentAddTransactionBinding
 import akashsarkar188.expensedaroga.screens.addTransaction.adapter.TransactionAdapter
 import akashsarkar188.expensedaroga.screens.addTransaction.adapter.TransactionTypeAdapter
 import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionCategories
 import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
-import akashsarkar188.expensedaroga.services.SMSBroadcastReceiver
 import akashsarkar188.expensedaroga.utils.BUNDLE_MONTH_YEAR_STRING
 import akashsarkar188.expensedaroga.utils.ObjectFactory
 import akashsarkar188.expensedaroga.utils.commonMethods.*
@@ -14,79 +13,82 @@ import akashsarkar188.expensedaroga.utils.popup.transaction.ActionType
 import android.animation.LayoutTransition
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import java.util.*
 
+class AddTransactionFragment : Fragment() {
 
-class AddTransactionActivity : AppCompatActivity() {
-
-    private var binding: ActivityAddTransactionBinding? = null
+    private var binding: FragmentAddTransactionBinding? = null
     private val viewModel: TransactionViewModel by lazy {
         ViewModelProvider(this)[TransactionViewModel::class.java]
     }
     private lateinit var transactionAdapter: TransactionAdapter
     private lateinit var transactionTypeAdapter: TransactionTypeAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_transaction)
-
-        saveMonthInViewModel(intent)
-        init()
-        onClickListeners()
-        initObservers()
-        viewModel.fetchTransactionsForThisMonthYear()
-        //initBroadcastReceiver()
-    }
-
-    private fun saveMonthInViewModel(intent: Intent) {
-        // no month received? lets just focus on present!
-        (intent.getStringExtra(BUNDLE_MONTH_YEAR_STRING)).let {
-            if (it == null) {
-                viewModel.selectedMonthYear.value = getCurrentMonthYearString()
-                viewModel.selectedDate.value = getCurrentDateObject()
-            } else {
-                viewModel.selectedMonthYear.value = it
-
-                if (it == getCurrentMonthYearString()) {
-                    // current month is selected, so lets get the current date
-                    viewModel.selectedDate.value = getCurrentDateObject()
-                } else {
-                    viewModel.selectedDate.value = getLastDateForMonthYear(it)
+    companion object {
+        @JvmStatic
+        fun newInstance(monthYearString: String?) = AddTransactionFragment().apply {
+            arguments = Bundle().apply {
+                if (monthYearString != null) {
+                    putString(BUNDLE_MONTH_YEAR_STRING, monthYearString)
                 }
             }
         }
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        intent?.let {
-            saveMonthInViewModel(it)
-            viewModel.fetchTransactionsForThisMonthYear()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            if (it.containsKey(BUNDLE_MONTH_YEAR_STRING)) {
+                viewModel.selectedMonthYear.value = it.getString(BUNDLE_MONTH_YEAR_STRING)
+                if (it.getString(BUNDLE_MONTH_YEAR_STRING) == getCurrentMonthYearString()) {
+                    // current month is selected, so lets get the current date
+                    viewModel.selectedDate.value = getCurrentDateObject()
+                } else {
+                    viewModel.selectedDate.value =
+                        getLastDateForMonthYear(it.getString(BUNDLE_MONTH_YEAR_STRING)!!)
+                }
+            } else {
+                viewModel.selectedMonthYear.value = getCurrentMonthYearString()
+                viewModel.selectedDate.value = getCurrentDateObject()
+            }
         }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_add_transaction, container, false)
+
+        init()
+        onClickListeners()
+        initObservers()
+        viewModel.fetchTransactionsForThisMonthYear()
+
+        return binding?.root
     }
 
     private fun init() {
 
         binding?.apply {
             transactionsRecyclerView.layoutManager =
-                LinearLayoutManager(this@AddTransactionActivity)
+                LinearLayoutManager(context)
 
             transactionTypeRecyclerView.layoutManager =
                 LinearLayoutManager(
-                    this@AddTransactionActivity,
+                    context,
                     LinearLayoutManager.HORIZONTAL,
                     false
                 )
@@ -128,47 +130,50 @@ class AddTransactionActivity : AppCompatActivity() {
             }
 
             transactionDateLinearLayout.setOnClickListener {
+                context?.let { context ->
+                    DatePickerDialog(
+                        context,
+                        { view, year, month, day ->
+                            val cal = Calendar.getInstance()
+                            cal.set(Calendar.YEAR, year)
+                            cal.set(Calendar.MONTH, month)
+                            cal.set(Calendar.DAY_OF_MONTH, day)
 
-                DatePickerDialog(
-                    this@AddTransactionActivity,
-                    { view, year, month, day ->
-                        val cal = Calendar.getInstance()
-                        cal.set(Calendar.YEAR, year)
-                        cal.set(Calendar.MONTH, month)
-                        cal.set(Calendar.DAY_OF_MONTH, day)
-
-                        viewModel.selectedDate.value = cal.time
-                    },
-                    getYearIntFromMonthYearStr(viewModel.selectedMonthYear.value),
-                    getMonthIntFromMonthYearStr(viewModel.selectedMonthYear.value),
-                    1
-                ).show()
+                            viewModel.selectedDate.value = cal.time
+                        },
+                        getYearIntFromMonthYearStr(viewModel.selectedMonthYear.value),
+                        getMonthIntFromMonthYearStr(viewModel.selectedMonthYear.value),
+                        1
+                    ).show()
+                }
             }
 
             selectMonthCardView.setOnClickListener {
-                DatePickerDialog(
-                    this@AddTransactionActivity,
-                    { view, year, month, day ->
-                        val cal = Calendar.getInstance()
-                        cal.set(Calendar.YEAR, year)
-                        cal.set(Calendar.MONTH, month)
-                        cal.set(Calendar.DAY_OF_MONTH, day)
+                context?.let { context ->
+                    DatePickerDialog(
+                        context,
+                        { view, year, month, day ->
+                            val cal = Calendar.getInstance()
+                            cal.set(Calendar.YEAR, year)
+                            cal.set(Calendar.MONTH, month)
+                            cal.set(Calendar.DAY_OF_MONTH, day)
 
-                        viewModel.selectedMonthYear.value = getMonthYearStringFromDate(cal.time)
+                            viewModel.selectedMonthYear.value = getMonthYearStringFromDate(cal.time)
 
-                        if (viewModel.selectedMonthYear.value == getCurrentMonthYearString()) {
-                            // current month is selected, so lets get the current date
-                            viewModel.selectedDate.value = getCurrentDateObject()
-                        } else {
-                            viewModel.selectedDate.value =
-                                getLastDateForMonthYear(viewModel.selectedMonthYear.value!!)
-                        }
-                        viewModel.fetchTransactionsForThisMonthYear()
-                    },
-                    getYearIntFromMonthYearStr(viewModel.selectedMonthYear.value),
-                    getMonthIntFromMonthYearStr(viewModel.selectedMonthYear.value),
-                    1
-                ).show()
+                            if (viewModel.selectedMonthYear.value == getCurrentMonthYearString()) {
+                                // current month is selected, so lets get the current date
+                                viewModel.selectedDate.value = getCurrentDateObject()
+                            } else {
+                                viewModel.selectedDate.value =
+                                    getLastDateForMonthYear(viewModel.selectedMonthYear.value!!)
+                            }
+                            viewModel.fetchTransactionsForThisMonthYear()
+                        },
+                        getYearIntFromMonthYearStr(viewModel.selectedMonthYear.value),
+                        getMonthIntFromMonthYearStr(viewModel.selectedMonthYear.value),
+                        1
+                    ).show()
+                }
             }
         }
     }
@@ -189,7 +194,7 @@ class AddTransactionActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
-        viewModel.allTransactions?.observe(this) {
+        viewModel.allTransactions?.observe(viewLifecycleOwner) {
             it?.let {
                 if (it.success is List<*>) {
                     Log.e("XXX", "initObservers: " + it.success)
@@ -202,7 +207,7 @@ class AddTransactionActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.selectedDate.observe(this) {
+        viewModel.selectedDate.observe(viewLifecycleOwner) {
             it?.let {
                 binding?.apply {
                     transactionDateTextView.text = "On ${getDateInDD_MMM(it)}"
@@ -210,12 +215,12 @@ class AddTransactionActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.selectedMonthYear.observe(this) {
+        viewModel.selectedMonthYear.observe(viewLifecycleOwner) {
             binding?.monthYearTextView?.text =
                 getFullMonthYearStringFromMonthYear(viewModel.selectedMonthYear.value!!)
         }
 
-        ObjectFactory.globalRefreshMutableLiveData.observe(this) {
+        ObjectFactory.globalRefreshMutableLiveData.observe(viewLifecycleOwner) {
             doIfTrue(it) {
                 viewModel.fetchTransactionsForThisMonthYear()
             }
@@ -234,7 +239,7 @@ class AddTransactionActivity : AppCompatActivity() {
                         params.marginEnd = 16.toPx.toInt()
                         params.bottomMargin = 10.toPx.toInt()
                         transactionMetaInputLinearLayout.visibility = View.GONE
-                        closeKeyboard(this@AddTransactionActivity)
+                        closeKeyboard(context)
                     } else {
                         amountCardView.radius = 0.toPx
                         params.marginStart = 0
@@ -267,20 +272,7 @@ class AddTransactionActivity : AppCompatActivity() {
         binding?.apply {
             transactionAmountEditText.setText("")
             transactionNoteEditText.setText("")
-            closeKeyboard(this@AddTransactionActivity)
+            closeKeyboard(context)
         }
-    }
-
-    private val smsBroadcastReceiver: SMSBroadcastReceiver by lazy {
-        SMSBroadcastReceiver()
-    }
-
-    private fun initBroadcastReceiver() {
-        /*ContextCompat.registerReceiver(
-            this,
-            smsBroadcastReceiver,
-            IntentFilter("android.provider.Telephony.SMS_RECEIVED"),
-            ContextCompat.RECEIVER_NOT_EXPORTED
-        )*/
     }
 }

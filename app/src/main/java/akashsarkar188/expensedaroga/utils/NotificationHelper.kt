@@ -1,7 +1,7 @@
 package akashsarkar188.expensedaroga.utils
 
 import akashsarkar188.expensedaroga.R
-import akashsarkar188.expensedaroga.screens.addTransaction.AddTransactionActivity
+import akashsarkar188.expensedaroga.screens.addTransaction.AddTransactionBubbleActivity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,14 +9,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
-import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.Person
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import kotlin.random.Random
 
 object NotificationHelper {
 
@@ -27,7 +25,7 @@ object NotificationHelper {
         var shortcut: ShortcutInfoCompat? = null
         var bubbleData: NotificationCompat.BubbleMetadata? = null
         val notificationManager: NotificationManager
-        val targetIntent = Intent(context, AddTransactionActivity::class.java).putExtra(BUNDLE_MONTH_YEAR_STRING, monthYear)
+        val targetIntent = Intent(context, AddTransactionBubbleActivity::class.java).putExtra(BUNDLE_MONTH_YEAR_STRING, monthYear)
         val bubbleIntent = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
             PendingIntent.getActivity(context, 0, targetIntent, PendingIntent.FLAG_MUTABLE)
         } else {

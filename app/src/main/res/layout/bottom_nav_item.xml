@@ -34,6 +34,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Home"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:fontFamily="@font/open_sans"
                 android:textSize="14dp"
                 android:textColor="@color/themeGreenDarker"/>

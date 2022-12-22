@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import java.lang.ref.WeakReference
 
-object FragmentHelper {
+object MainActivityFragmentHelper {
 
     private var activityContext: WeakReference<AppCompatActivity?>? = null
     private var lastActiveFragment: WeakReference<Fragment?>? = null

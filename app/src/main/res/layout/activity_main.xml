@@ -56,7 +56,7 @@
                 android:orientation="horizontal"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
-                android:weightSum="2">
+                android:weightSum="3">
 
                 <LinearLayout
                     android:id="@+id/homeContainerLinearLayout"
@@ -71,6 +71,22 @@
                         layout="@layout/bottom_nav_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/addTransactionContainerLinearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <include
+                        android:id="@+id/addTransactionsLayout"
+                        layout="@layout/bottom_nav_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
                 </LinearLayout>
 
                 <LinearLayout
