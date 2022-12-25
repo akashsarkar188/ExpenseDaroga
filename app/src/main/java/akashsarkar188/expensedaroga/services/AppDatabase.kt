@@ -8,7 +8,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [TransactionDataModel::class], version = 9, exportSchema = false)
+@Database(entities = [TransactionDataModel::class], version = 10, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {

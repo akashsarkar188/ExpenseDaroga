@@ -6,6 +6,7 @@ import akashsarkar188.expensedaroga.screens.addTransaction.adapter.TransactionAd
 import akashsarkar188.expensedaroga.screens.addTransaction.adapter.TransactionTypeAdapter
 import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionCategories
 import akashsarkar188.expensedaroga.screens.addTransaction.model.TransactionDataModel
+import akashsarkar188.expensedaroga.services.SharedPreferenceHelper
 import akashsarkar188.expensedaroga.utils.BUNDLE_MONTH_YEAR_STRING
 import akashsarkar188.expensedaroga.utils.ObjectFactory
 import akashsarkar188.expensedaroga.utils.commonMethods.*
@@ -19,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -114,6 +116,8 @@ class AddTransactionFragment : Fragment() {
 
             monthYearTextView.text =
                 getFullMonthYearStringFromMonthYear(viewModel.selectedMonthYear.value!!)
+
+            handleCreditCardVisibility()
         }
 
         transactionTypeAdapter.addData(viewModel.getTransactionTypes())
@@ -175,6 +179,19 @@ class AddTransactionFragment : Fragment() {
                     ).show()
                 }
             }
+
+            switchCashCard.setOnCheckedChangeListener { _, checked ->
+                when {
+                    checked -> {
+                        binding?.tvSwitchCash?.setTextColor(ContextCompat.getColor(requireContext(),R.color.blue_400))
+                        binding?.tvSwitchCard?.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+                    }
+                    else -> {
+                        binding?.tvSwitchCash?.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+                        binding?.tvSwitchCard?.setTextColor(ContextCompat.getColor(requireContext(),R.color.blue_400))
+                    }
+                }
+            }
         }
     }
 
@@ -187,7 +204,12 @@ class AddTransactionFragment : Fragment() {
             payload.meta = TransactionDataModel.TransactionMeta(
                 TransactionCategories.daily_expense.toString(),
                 transactionTypeAdapter.getSelectedItem(),
-                it.transactionNoteEditText.text?.toString()
+                it.transactionNoteEditText.text?.toString(),
+                if (SharedPreferenceHelper.isCreditCardUser()) {
+                    it.switchCashCard.isChecked
+                } else {
+                    false
+                }
             )
         }
         return payload
@@ -223,6 +245,12 @@ class AddTransactionFragment : Fragment() {
         ObjectFactory.globalRefreshMutableLiveData.observe(viewLifecycleOwner) {
             doIfTrue(it) {
                 viewModel.fetchTransactionsForThisMonthYear()
+            }
+        }
+
+        ObjectFactory.creditCardPreferenceMutableLiveData.observe(viewLifecycleOwner) {
+            doIfTrue(it) {
+                handleCreditCardVisibility()
             }
         }
 
@@ -273,6 +301,14 @@ class AddTransactionFragment : Fragment() {
             transactionAmountEditText.setText("")
             transactionNoteEditText.setText("")
             closeKeyboard(context)
+        }
+    }
+
+    private fun handleCreditCardVisibility() {
+        if (SharedPreferenceHelper.isCreditCardUser()) {
+            binding?.switchLayout?.visibility = View.VISIBLE
+        } else {
+            binding?.switchLayout?.visibility = View.GONE
         }
     }
 }

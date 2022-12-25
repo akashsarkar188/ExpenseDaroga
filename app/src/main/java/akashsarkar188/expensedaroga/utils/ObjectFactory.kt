@@ -16,4 +16,8 @@ object ObjectFactory {
     val userNameChangeMutableLiveData: MutableLiveData<Boolean> by lazy {
         MutableLiveData()
     }
+
+    val creditCardPreferenceMutableLiveData: MutableLiveData<Boolean> by lazy {
+        MutableLiveData()
+    }
 }

@@ -26,6 +26,19 @@ object SharedPreferenceHelper {
         }
     }
 
+    fun isCreditCardUser(): Boolean {
+        return sharedPreferences?.getBoolean(CREDIT_CARD_USER, false) ?: false
+    }
+
+    fun setCreditCardUser(isCardUser: Boolean) {
+        sharedPreferences?.apply {
+            val editor = edit()
+            editor.putBoolean(CREDIT_CARD_USER, isCardUser)
+            editor.apply()
+        }
+        ObjectFactory.creditCardPreferenceMutableLiveData.value = true
+    }
+
     fun readSms(): Boolean {
         return sharedPreferences?.getBoolean(READ_SMS, false) ?: false
     }
@@ -52,6 +65,7 @@ object SharedPreferenceHelper {
     }
 
     private val SHOULD_BUBBLE = "shouldBubble"
+    private val CREDIT_CARD_USER = "creditCardUser"
     private val USER_NAME = "userName"
     private val READ_SMS = "readSms"
 }

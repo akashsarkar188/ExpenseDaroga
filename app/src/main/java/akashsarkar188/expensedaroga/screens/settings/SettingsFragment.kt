@@ -62,6 +62,12 @@ class SettingsFragment : Fragment() {
                 SharedPreferenceHelper.setReadSms(checked)
             }
 
+            creditCardToggle.isChecked = SharedPreferenceHelper.isCreditCardUser()
+
+            creditCardToggle.setOnCheckedChangeListener { compoundButton, checked ->
+                SharedPreferenceHelper.setCreditCardUser(checked)
+            }
+
             userNameEditText.setText(SharedPreferenceHelper.getUserName())
 
             userNameEditText.addTextChangedListener {

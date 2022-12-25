@@ -156,20 +156,78 @@
                 android:animateLayoutChanges="true"
                 android:background="#80E3F2FD"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/transactionNoteEditText"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:fontFamily="@font/open_sans"
-                    android:hint="for Chai S...Samosa"
-                    android:inputType="text"
                     android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                    android:textColor="@color/black"
-                    android:textSize="14dp" />
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/transactionNoteEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/open_sans"
+                        android:hint="for Chai S...Samosa"
+                        android:layout_toStartOf="@id/switchLayout"
+                        android:inputType="text"
+                        android:paddingVertical="8dp"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/switchLayout"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+                        android:layout_height="30dp"
+                        android:background="@drawable/bg_switch"
+                        android:padding="2.5dp">
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switchCashCard"
+                            android:layout_width="100dp"
+                            android:layout_height="27dp"
+                            android:layout_centerVertical="true"
+                            android:checked="false"
+                            android:textColor="@color/white"
+                            android:thumb="@drawable/thumb_selector"
+                            app:track="@drawable/track_selector" />
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/tvSwitchCash"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Cash"
+                                android:textColor="@color/white"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/tvSwitchCard"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Card"
+                                android:textColor="@color/blue_400"
+                                android:textSize="10dp" />
+
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
 
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"

@@ -28,6 +28,7 @@ data class TransactionDataModel(
     data class TransactionMeta(
         @ColumnInfo(name = "category") var category: String? = null,
         @ColumnInfo(name = "transactionType") var transactionType: TransactionType? = null,
-        @ColumnInfo(name = "note") var transactionNote: String? = null
+        @ColumnInfo(name = "note") var transactionNote: String? = null,
+        @ColumnInfo(name = "is_card") var isCardTransaction: Boolean = false
     )
 }
