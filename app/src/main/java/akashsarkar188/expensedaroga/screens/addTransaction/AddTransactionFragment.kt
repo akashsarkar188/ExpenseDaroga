@@ -36,13 +36,15 @@ class AddTransactionFragment : Fragment() {
     }
     private lateinit var transactionAdapter: TransactionAdapter
     private lateinit var transactionTypeAdapter: TransactionTypeAdapter
+    private var inAppView = true
 
     companion object {
         @JvmStatic
-        fun newInstance(monthYearString: String?) = AddTransactionFragment().apply {
+        fun newInstance(monthYearString: String?, inAppView: Boolean) = AddTransactionFragment().apply {
             arguments = Bundle().apply {
                 if (monthYearString != null) {
                     putString(BUNDLE_MONTH_YEAR_STRING, monthYearString)
+                    putBoolean("inAppView", inAppView)
                 }
             }
         }
@@ -64,6 +66,8 @@ class AddTransactionFragment : Fragment() {
                 viewModel.selectedMonthYear.value = getCurrentMonthYearString()
                 viewModel.selectedDate.value = getCurrentDateObject()
             }
+
+            inAppView = it.getBoolean("inAppView", true)
         }
     }
 
@@ -75,6 +79,7 @@ class AddTransactionFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_add_transaction, container, false)
 
         init()
+        handleViewType(inAppView)
         onClickListeners()
         initObservers()
         viewModel.fetchTransactionsForThisMonthYear()
@@ -309,6 +314,24 @@ class AddTransactionFragment : Fragment() {
             binding?.switchLayout?.visibility = View.VISIBLE
         } else {
             binding?.switchLayout?.visibility = View.GONE
+        }
+    }
+
+    private fun handleViewType(inAppView: Boolean) {
+        binding?.apply {
+            context?.let { context ->
+                if (inAppView) {
+                    greetingTextView.visibility = View.VISIBLE
+                    parentRelativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.basicBlack))
+                    toolbar.setBackgroundColor(ContextCompat.getColor(context, R.color.basicBlack))
+                    monthYearTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
+                } else {
+                    greetingTextView.visibility = View.GONE
+                    parentRelativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                    toolbar.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                    monthYearTextView.setTextColor(ContextCompat.getColor(context, R.color.basicBlack))
+                }
+            }
         }
     }
 }

@@ -35,7 +35,7 @@ class AddTransactionBubbleActivity : AppCompatActivity() {
         (intent.getStringExtra(BUNDLE_MONTH_YEAR_STRING)).let {
             monthYearString = it ?: getCurrentMonthYearString()
         }
-        addTransactionFragment = AddTransactionFragment.newInstance(monthYearString)
+        addTransactionFragment = AddTransactionFragment.newInstance(monthYearString, false)
     }
 
     private fun init() {

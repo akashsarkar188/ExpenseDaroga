@@ -113,11 +113,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:hint="Your Name"
+                        android:textColorHint="@color/white"
+                        app:boxStrokeColor="@color/white"
                         app:endIconMode="custom"
                         app:endIconTint="@color/green_400"
-                        android:hint="Your Name"
-                        app:boxStrokeColor="@color/white"
-                        android:textColorHint="@color/white"
                         app:hintTextColor="@color/colorGreyOverBlackBg">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -183,8 +183,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"

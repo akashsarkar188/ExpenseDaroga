@@ -2,17 +2,30 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
     android:clickable="true"
     tools:context=".screens.addTransaction.AddTransactionFragment">
 
     <RelativeLayout
+        android:id="@+id/parentRelativeLayout"
         android:layout_width="match_parent"
+        android:background="@color/basicBlack"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/greetingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/capriola"
+            android:layout_margin="16dp"
+            android:text="Transactions"
+            android:textColor="@color/white"
+            android:textSize="28dp" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            android:layout_below="@id/greetingTextView"
             android:layout_width="match_parent"
+            android:background="@color/basicBlack"
             android:layout_height="56dp"
             android:elevation="5dp">
 
@@ -62,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
                         android:text="Oct 2022"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="18dp" />
 
                     <TextView
@@ -126,6 +139,7 @@
         <RelativeLayout
             android:id="@+id/dataLayout"
             android:layout_width="match_parent"
+            android:background="@color/white"
             android:layout_height="match_parent"
             android:layout_above="@id/bottomRelativeLayout"
             android:layout_below="@id/toolbar">
@@ -144,6 +158,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:background="@color/white"
             android:animateLayoutChanges="true"
             android:elevation="10dp"
             android:orientation="vertical"
@@ -156,21 +171,21 @@
                 android:animateLayoutChanges="true"
                 android:background="#80E3F2FD"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:paddingHorizontal="16dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/transactionNoteEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/switchLayout"
                         android:background="@android:color/transparent"
                         android:fontFamily="@font/open_sans"
                         android:hint="for Chai S...Samosa"
-                        android:layout_toStartOf="@id/switchLayout"
                         android:inputType="text"
                         android:paddingVertical="8dp"
                         android:textColor="@color/black"
@@ -178,13 +193,13 @@
 
                     <RelativeLayout
                         android:id="@+id/switchLayout"
-                        android:layout_alignParentEnd="true"
                         android:layout_width="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:visibility="gone"
                         android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:background="@drawable/bg_switch"
-                        android:padding="2.5dp">
+                        android:padding="2.5dp"
+                        android:visibility="gone">
 
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/switchCashCard"
@@ -296,9 +311,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="10dp"
                 android:animateLayoutChanges="true"
                 app:cardCornerRadius="30dp"
-                android:layout_marginBottom="10dp"
                 app:cardElevation="0dp"
                 app:strokeColor="@color/grey_400"
                 app:strokeWidth="0dp">

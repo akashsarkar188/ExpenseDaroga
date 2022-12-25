@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         SettingsFragment.newInstance()
     }
     private val addTransactionFragment : AddTransactionFragment by lazy {
-        AddTransactionFragment.newInstance(null)
+        AddTransactionFragment.newInstance(null, true)
     }
 
     private fun initBottomNavigation() {
