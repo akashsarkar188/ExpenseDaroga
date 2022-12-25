@@ -40,6 +40,8 @@ class HomeViewModel : ViewModel() {
 
     private var totalCreditedAmount = "0.0"
     private var totalDebitedAmount = "0.0"
+    private var totalDebitedAmount_cash = "0.0"
+    private var totalDebitedAmount_creditCard = "0.0"
     private var totalLoanTakenAmount = "0.0"
     private var totalLoanGivenAmount = "0.0"
 
@@ -62,6 +64,8 @@ class HomeViewModel : ViewModel() {
                 val transactionData = it.success as ArrayList<TransactionDataModel>
                 var credit = 0.0
                 var debit = 0.0
+                var debit_cash = 0.0
+                var debit_creditCard = 0.0
                 var loanTaken = 0.0
                 var loanGiven = 0.0
 
@@ -73,6 +77,11 @@ class HomeViewModel : ViewModel() {
                         TransactionType.DEBIT -> {
                             Log.e("XXX", "fetchTransactionsForThisMonthYear: " + data.amount)
                             debit += data.amount ?: 0.0
+                            if (data.meta?.isCardTransaction ?: false) {
+                                debit_creditCard += data.amount ?: 0.0
+                            } else {
+                                debit_cash += data.amount ?: 0.0
+                            }
                         }
                         TransactionType.LOAN_GIVEN -> {
                             loanGiven += data.amount ?: 0.0
@@ -88,6 +97,8 @@ class HomeViewModel : ViewModel() {
 
                 totalCreditedAmount = credit.toString()
                 totalDebitedAmount = debit.toString()
+                totalDebitedAmount_cash = debit_cash.toString()
+                totalDebitedAmount_creditCard = debit_creditCard.toString()
                 totalLoanTakenAmount = loanTaken.toString()
                 totalLoanGivenAmount = loanGiven.toString()
             }
@@ -113,7 +124,9 @@ class HomeViewModel : ViewModel() {
                         val monthData = tempHashMap[monthYear]
                         when (data.meta?.transactionType) {
                             TransactionType.CREDIT -> monthData!!.creditAmount += data.amount!!
-                            TransactionType.DEBIT -> monthData!!.debitAmount += data.amount!!
+                            TransactionType.DEBIT -> {
+                                monthData!!.debitAmount += data.amount!!
+                            }
                             TransactionType.LOAN_TAKEN -> monthData!!.loanTakenAmount += data.amount!!
                             TransactionType.LOAN_GIVEN -> monthData!!.loanGivenAmount += data.amount!!
                             null -> TODO()
@@ -125,7 +138,9 @@ class HomeViewModel : ViewModel() {
                         monthData.month = monthYear
                         when (data.meta?.transactionType) {
                             TransactionType.CREDIT -> monthData!!.creditAmount += data.amount!!
-                            TransactionType.DEBIT -> monthData!!.debitAmount += data.amount!!
+                            TransactionType.DEBIT -> {
+                                monthData!!.debitAmount += data.amount!!
+                            }
                             TransactionType.LOAN_TAKEN -> monthData!!.loanTakenAmount += data.amount!!
                             TransactionType.LOAN_GIVEN -> monthData!!.loanGivenAmount += data.amount!!
                             null -> TODO()
@@ -153,25 +168,29 @@ class HomeViewModel : ViewModel() {
 
     fun getTotalDebitAmount() = totalDebitedAmount
 
+    fun getTotalCashDebitAmount() = totalDebitedAmount_cash
+
+    fun getTotalCreditCardDebitAmount() = totalDebitedAmount_creditCard
+
     fun getTotalLoanGivenAmount() = totalLoanGivenAmount
 
     fun getTotalLoanTakenAmount() = totalLoanTakenAmount
 
     fun isCreditGreaterThanDebit(): Boolean {
-        return totalCreditedAmount.toDouble() > totalDebitedAmount.toDouble()
+        return totalCreditedAmount.toDouble() >= totalDebitedAmount_cash.toDouble()
     }
 
     fun getBalanceAmount(): String =
         ((totalCreditedAmount.toDouble() + totalLoanTakenAmount.toDouble())
-                - (totalDebitedAmount.toDouble() + totalLoanGivenAmount.toDouble())).toString()
+                - (totalDebitedAmount_cash.toDouble() + totalLoanGivenAmount.toDouble())).toString()
 
     fun isBalanceAmountPositive(): Boolean? {
         return if (((totalCreditedAmount.toDouble() + totalLoanTakenAmount.toDouble())
-                - (totalDebitedAmount.toDouble() + totalLoanGivenAmount.toDouble())) == 0.0) {
+                - (totalDebitedAmount_cash.toDouble() + totalLoanGivenAmount.toDouble())) == 0.0) {
             null
         } else {
             ((totalCreditedAmount.toDouble() + totalLoanTakenAmount.toDouble())
-                    - (totalDebitedAmount.toDouble() + totalLoanGivenAmount.toDouble()) > 0)
+                    - (totalDebitedAmount_cash.toDouble() + totalLoanGivenAmount.toDouble()) > 0)
         }
     }
 }

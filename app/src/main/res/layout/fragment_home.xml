@@ -56,6 +56,7 @@
                         android:layout_height="wrap_content"
                         android:background="#17191a"
                         android:orientation="vertical"
+                        android:animateLayoutChanges="true"
                         android:padding="8dp">
 
                         <TextView
@@ -103,14 +104,24 @@
                             android:paddingVertical="6dp"
                             android:weightSum="2">
 
-                            <TextView
+                            <LinearLayout
+                                android:id="@+id/debitsLinearLayout"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/open_sans"
-                                android:text="Debits"
-                                android:textColor="@color/colorGreyOverBlackBg"
-                                android:textSize="15dp" />
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:drawablePadding="10dp"
+                                    android:fontFamily="@font/open_sans"
+                                    android:text="Debits"
+                                    android:textColor="@color/colorGreyOverBlackBg"
+                                    android:textSize="15dp"
+                                    app:drawableEndCompat="@drawable/info_icon"
+                                    app:drawableTint="@color/colorGreyOverBlackBg" />
+                            </LinearLayout>
+
 
                             <TextView
                                 android:id="@+id/monthDebitAmount"
@@ -122,6 +133,73 @@
                                 android:textAlignment="textEnd"
                                 android:textColor="@color/red_300"
                                 android:textSize="15dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/debitDetailsLayout"
+                            android:layout_width="match_parent"
+                            android:visibility="gone"
+                            android:animateLayoutChanges="true"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="4dp"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/open_sans"
+                                    android:gravity="center_vertical"
+                                    android:text="Cash Spends"
+                                    android:textColor="@color/colorGreyOverBlackBg"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/cashDebitAmount"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/open_sans"
+                                    android:text="Rs.1000"
+                                    android:textAlignment="textEnd"
+                                    android:textColor="@color/white"
+                                    android:textSize="12dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="4dp"
+                                android:weightSum="2">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/open_sans"
+                                    android:gravity="center_vertical"
+                                    android:text="Credit Card Spends"
+                                    android:textColor="@color/colorGreyOverBlackBg"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/creditCardDebitAmount"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/open_sans"
+                                    android:text="Rs.1000"
+                                    android:textAlignment="textEnd"
+                                    android:textColor="@color/white"
+                                    android:textSize="12dp" />
+                            </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
@@ -198,12 +276,12 @@
                                     android:id="@+id/availableBalanceTextView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/open_sans"
-                                    android:text="Available Balance"
-                                    android:drawableTint="@color/colorGreyOverBlackBg"
-                                    android:drawablePadding="10dp"
-                                    android:gravity="center_vertical"
                                     android:drawableEnd="@drawable/info_icon"
+                                    android:drawablePadding="10dp"
+                                    android:drawableTint="@color/colorGreyOverBlackBg"
+                                    android:fontFamily="@font/open_sans"
+                                    android:gravity="center_vertical"
+                                    android:text="Available Balance"
                                     android:textColor="@color/colorGreyOverBlackBg"
                                     android:textSize="15dp" />
 
@@ -211,13 +289,13 @@
                                     android:id="@+id/availableBalanceInfoTextView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:visibility="gone"
                                     android:layout_marginTop="5dp"
                                     android:fontFamily="@font/open_sans"
-                                    android:text="(Credit + Loan Taken) - (Debit + Loan Given)"
                                     android:gravity="center_vertical"
+                                    android:text="(Credit + Loan Taken) - (Cash Spend + Loan Given)"
                                     android:textColor="@color/colorGreyOverBlackBg"
-                                    android:textSize="10dp" />
+                                    android:textSize="10dp"
+                                    android:visibility="gone" />
 
                             </LinearLayout>
 

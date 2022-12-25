@@ -52,6 +52,7 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
+        init()
         onClickListeners()
         initObservers()
         initHistory()
@@ -61,12 +62,26 @@ class HomeFragment : Fragment() {
         return binding?.root
     }
 
+    private fun init() {
+        binding?.apply {
+
+        }
+    }
+
     private fun onClickListeners() {
         binding?.availableBalanceTextView?.setOnClickListener {
             if (binding?.availableBalanceInfoTextView?.visibility == View.VISIBLE) {
                 binding?.availableBalanceInfoTextView?.visibility = View.GONE
             } else {
                 binding?.availableBalanceInfoTextView?.visibility = View.VISIBLE
+            }
+        }
+
+        binding?.debitsLinearLayout?.setOnClickListener {
+            if (binding?.debitDetailsLayout?.visibility == View.VISIBLE) {
+                binding?.debitDetailsLayout?.visibility = View.GONE
+            } else {
+                binding?.debitDetailsLayout?.visibility = View.VISIBLE
             }
         }
     }
@@ -110,6 +125,8 @@ class HomeFragment : Fragment() {
             historyTextView.text = "History 📊"
             monthCreditAmount.text = "₹${formatAsCurrency(viewModel.getTotalCreditAmount())}"
             monthDebitAmount.text = "₹${formatAsCurrency(viewModel.getTotalDebitAmount())}"
+            cashDebitAmount.text = "₹${formatAsCurrency(viewModel.getTotalCashDebitAmount())}"
+            creditCardDebitAmount.text = "₹${formatAsCurrency(viewModel.getTotalCreditCardDebitAmount())}"
             monthLoanGivenAmount.text = "₹${formatAsCurrency(viewModel.getTotalLoanGivenAmount())}"
             monthLoanTakenAmount.text = "₹${formatAsCurrency(viewModel.getTotalLoanTakenAmount())}"
             availableBalanceAmount.text = "₹${formatAsCurrency(viewModel.getBalanceAmount())}"
